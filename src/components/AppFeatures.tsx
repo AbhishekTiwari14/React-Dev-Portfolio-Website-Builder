@@ -1,5 +1,4 @@
 import { motion } from "motion/react"
-import { Layout, Palette } from "lucide-react"
 import {
   Select,
   SelectContent,
@@ -21,7 +20,46 @@ export default function AppFeatures() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="bg-gray-800 p-6 rounded-xl group"
           >
-            <Palette className="w-12 h-12 text-purple-400 mb-4 transition-transform duration-300 group-hover:rotate-360" />
+            <svg
+              className="mb-4 transition-transform duration-300 group-hover:rotate-360"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              width="48"
+              height="48"
+            >
+              <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                {" "}
+                <path
+                  d="M8 10.5C8 11.3284 7.32843 12 6.5 12C5.67157 12 5 11.3284 5 10.5C5 9.67157 5.67157 9 6.5 9C7.32843 9 8 9.67157 8 10.5Z"
+                  fill="#c27aff"
+                ></path>{" "}
+                <path
+                  d="M10.5 8C11.3284 8 12 7.32843 12 6.5C12 5.67157 11.3284 5 10.5 5C9.67157 5 9 5.67157 9 6.5C9 7.32843 9.67157 8 10.5 8Z"
+                  fill="#c27aff"
+                ></path>{" "}
+                <path
+                  d="M17 6.5C17 7.32843 16.3284 8 15.5 8C14.6716 8 14 7.32843 14 6.5C14 5.67157 14.6716 5 15.5 5C16.3284 5 17 5.67157 17 6.5Z"
+                  fill="#c27aff"
+                ></path>{" "}
+                <path
+                  d="M7.5 17C8.32843 17 9 16.3284 9 15.5C9 14.6716 8.32843 14 7.5 14C6.67157 14 6 14.6716 6 15.5C6 16.3284 6.67157 17 7.5 17Z"
+                  fill="#c27aff"
+                ></path>{" "}
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M1 12C1 5.92487 5.92487 1 12 1C17.9712 1 23 5.34921 23 11V11.0146C23 11.543 23.0001 12.4458 22.6825 13.4987C21.8502 16.2575 18.8203 16.9964 16.4948 16.4024C16.011 16.2788 15.5243 16.145 15.0568 16.0107C14.2512 15.7791 13.5177 16.4897 13.6661 17.2315L13.9837 18.8197L14.0983 19.5068C14.3953 21.289 13.0019 23.1015 11.0165 22.8498C7.65019 22.423 5.11981 21.1007 3.43595 19.1329C1.75722 17.171 1 14.6613 1 12ZM12 3C7.02944 3 3 7.02944 3 12C3 14.2854 3.64673 16.303 4.95555 17.8326C6.25924 19.3561 8.3 20.4894 11.2681 20.8657C11.7347 20.9249 12.2348 20.4915 12.1255 19.8356L12.0163 19.1803L11.7049 17.6237C11.2467 15.3325 13.4423 13.4657 15.6093 14.0885C16.0619 14.2186 16.529 14.3469 16.9897 14.4646C18.7757 14.9208 20.3744 14.2249 20.7677 12.921C20.997 12.161 21 11.5059 21 11C21 6.65079 17.0745 3 12 3Z"
+                  fill="#c27aff"
+                ></path>{" "}
+              </g>
+            </svg>
             <h3 className="text-white text-xl font-semibold mb-3">
               Custom Themes
             </h3>
@@ -36,7 +74,29 @@ export default function AppFeatures() {
             transition={{ duration: 0.5 }}
             className="bg-gray-800 p-6 rounded-xl group"
           >
-            <Layout className="w-12 h-12 text-blue-400 mb-4 transition-transform duration-300 group-hover:rotate-360" />
+            <svg
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="mb-4 transition-transform duration-300 group-hover:rotate-360"
+              width="48"
+              height="48"
+            >
+              <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                <path
+                  d="M1.547 0.309 C 1.258 0.384,1.016 0.529,0.773 0.773 C 0.524 1.022,0.416 1.198,0.316 1.520 L 0.253 1.720 0.253 8.000 L 0.253 14.280 0.316 14.480 C 0.416 14.802,0.524 14.978,0.773 15.227 C 1.022 15.476,1.198 15.584,1.520 15.684 L 1.720 15.747 8.000 15.747 L 14.280 15.747 14.480 15.684 C 14.802 15.584,14.978 15.476,15.227 15.227 C 15.476 14.978,15.584 14.802,15.684 14.480 L 15.747 14.280 15.747 8.000 L 15.747 1.720 15.684 1.520 C 15.584 1.198,15.476 1.022,15.227 0.773 C 14.980 0.525,14.739 0.382,14.441 0.307 C 14.207 0.248,1.774 0.249,1.547 0.309 M14.170 1.830 L 14.240 1.901 14.240 3.324 L 14.240 4.747 8.000 4.747 L 1.760 4.747 1.760 3.324 L 1.760 1.901 1.830 1.830 L 1.901 1.760 8.000 1.760 L 14.099 1.760 14.170 1.830 M4.747 10.267 L 4.747 14.267 3.403 14.267 C 2.665 14.267,2.023 14.259,1.977 14.250 C 1.931 14.241,1.864 14.203,1.827 14.166 L 1.760 14.099 1.760 10.183 L 1.760 6.267 3.253 6.267 L 4.747 6.267 4.747 10.267 M14.240 10.183 L 14.240 14.099 14.173 14.166 C 14.136 14.203,14.069 14.241,14.023 14.250 C 13.977 14.259,12.214 14.267,10.103 14.267 L 6.267 14.267 6.267 10.267 L 6.267 6.267 10.253 6.267 L 14.240 6.267 14.240 10.183 "
+                  stroke="none"
+                  fill-rule="evenodd"
+                  fill="#60a5fa"
+                ></path>
+              </g>
+            </svg>
             <h3 className="text-white text-xl font-semibold mb-3">
               Drag & Drop Builder
             </h3>

@@ -28,10 +28,10 @@ export const personalInfoSchema = z.object({
 })
 
 export const socialMediaLinksSchema = z.object({
-  Github: z.string().min(1, "You must add your github link"),
-  LinkedIn: z.string(),
+  Github: z.string().min(1, "You must add your Github link"),
+  LinkedIn: z.string().min(1, "You must add your Linkedin link"),
   Gmail: z.string().email(),
-  Technologies: z.array(z.string()).default([]),
+  Technologies: z.array(z.string()),
 })
 
 export const experienceInfoSchema = z.object({
@@ -51,6 +51,12 @@ export const projectsInfoSchema = z.object({
     z.object({
       title: z.string().min(1, "Title Missing"),
       description: z.string().min(1, "Description Missing"),
+      keyFeatures: z
+        .array(z.string().min(3, "Feature must be at least 3 characters"))
+        .length(3, "Add all 3 key features"),
+      demoLink: z.string(),
+      codeLink: z.string(),
+      technologies: z.array(z.string()),
     })
   ),
 })

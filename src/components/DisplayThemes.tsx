@@ -12,8 +12,11 @@ import { RootState } from "@/utils/store"
 import PalettePicker from "./PalettePicker"
 import { themes } from "@/lib/themeConfig"
 import { Link } from "react-router-dom"
-import Minimalist_Theme from "./Minimalist Theme/MinimalistTheme"
+import MinimalistTheme from "./Minimalist Theme/MinimalistTheme"
 import { ChevronRight } from "lucide-react"
+import { lazy } from "react"
+
+const CreativeTheme = lazy(() => import("./Creative Theme/CreativeTheme"))
 
 export default function DisplayThemes() {
   const dispatch = useDispatch()
@@ -32,11 +35,11 @@ export default function DisplayThemes() {
   }
   return (
     <>
-      <div className="z-40 px-4 py-3 flex justify-center gap-12 relative">
+      <div className="z-40 px-4 py-3 w-full flex flex-wrap justify-around lg:justify-center gap-6 lg:gap-12 relative overflow-y-hidden">
         <div>
           <label className="block mb-2 text-sm font-medium">Theme</label>
           <Select value={currentTheme} onValueChange={handleThemeChange}>
-            <SelectTrigger className="w-[180px] hover:cursor-pointer">
+            <SelectTrigger className="w-[120px] lg:w-[180px] hover:cursor-pointer">
               <SelectValue placeholder="Select a theme" />
             </SelectTrigger>
             <SelectContent className="bg-white">
@@ -52,7 +55,7 @@ export default function DisplayThemes() {
         <div>
           <label className="block mb-2 text-sm font-medium">Palette</label>
           <Select value={currentPalette} onValueChange={handlePaletteChange}>
-            <SelectTrigger className="w-full hover:cursor-pointer">
+            <SelectTrigger className="w-[120px] lg:w-[180px] hover:cursor-pointer">
               <SelectValue placeholder="Select a fruit" />
             </SelectTrigger>
             <SelectContent className="bg-white">
@@ -73,14 +76,15 @@ export default function DisplayThemes() {
             </SelectContent>
           </Select>
         </div>
-        <Link to="/pane" className="flex justify-end">
-          <button className="flex justify-around self-end bg-black hover:bg-blue-700 shadom-md hover:cursor-pointer text-white font-semibold px-3 py-1.5 rounded-lg">
-            Proceed <ChevronRight />
+        <Link to="/edit" className="flex justify-self-end">
+          <button className="flex justify-end self-end bg-black hover:bg-blue-700 shadom-md hover:cursor-pointer text-white font-semibold px-3 py-1.5 rounded-lg">
+            Build <ChevronRight />
           </button>
         </Link>
       </div>
-      {/* {currentTheme === "creative" && <Creative_Theme />} */}
-      {currentTheme === "minimalist" && <Minimalist_Theme />}
+      <div className="h-full w-full reltive">
+        {currentTheme === "creative" ? <CreativeTheme /> : <MinimalistTheme />}
+      </div>
     </>
   )
 }

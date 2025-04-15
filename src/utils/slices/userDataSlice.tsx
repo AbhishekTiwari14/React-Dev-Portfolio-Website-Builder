@@ -37,6 +37,10 @@ const initialState: userDataState = {
       {
         title: "",
         description: "",
+        keyFeatures: [],
+        codeLink: "",
+        demoLink: "",
+        technologies: [],
       },
     ],
   },

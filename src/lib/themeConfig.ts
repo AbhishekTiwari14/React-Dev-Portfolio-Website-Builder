@@ -12,8 +12,7 @@ export const themes: ThemeConfig = {
         cardHover: "hover:bg-gray-800",
         groupHover: "group-hover:text-teal-500",
         btn: "bg-teal-400/10 text-teal-300",
-        imgHover:
-          "border-slate-200/10 transition group-hover:border-slate-200/30",
+        bdr: "border-teal-400",
       },
       p2: {
         bg: "bg-gradient-to-r from-slate-900 to-black",
@@ -137,3 +136,4 @@ export const getActiveColors = (state: RootState) => {
   const { currentTheme, currentPalette } = state.theme
   return themes[currentTheme].palettes[currentPalette]
 }
+ 

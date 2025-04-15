@@ -7,12 +7,14 @@ export default function ExperienceCard({
   designation,
   company,
   workSummary,
+  bp,
 }: {
   fromYear?: string
   toYear?: string
   designation?: string
   company?: string
   workSummary?: string
+  bp?: string
 }) {
   const colors = useSelector(getActiveColors)
   return (

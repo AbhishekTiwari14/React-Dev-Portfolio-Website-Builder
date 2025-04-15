@@ -1,12 +1,13 @@
 import { useEffect, useState, useRef } from "react"
 
-type Breakpoint = "sm" | "md" | "lg" | "xl"
+type Breakpoint = "sm" | "md" | "lg" | "xl" | "2xl"
 
 const breakpoints = {
   sm: 640,
   md: 768,
   lg: 1024,
   xl: 1280,
+  twoxl: 1536,
 }
 
 export const usePanelWidth = () => {
@@ -19,8 +20,9 @@ export const usePanelWidth = () => {
 
     const updateBreakpoint = (width: number) => {
       let newBreakpoint: Breakpoint = "sm"
-
-      if (width >= breakpoints.xl) {
+      if (width >= breakpoints.twoxl) {
+        newBreakpoint = "2xl"
+      } else if (width >= breakpoints.xl) {
         newBreakpoint = "xl"
       } else if (width >= breakpoints.lg) {
         newBreakpoint = "lg"

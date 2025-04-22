@@ -36,6 +36,9 @@ export default function DisplayThemes() {
   return (
     <>
       <div className="z-40 px-4 py-3 w-full flex flex-wrap justify-around lg:justify-center gap-6 lg:gap-12 relative overflow-y-hidden">
+        <Link to="/" className="self-center absolute left-2">
+          <img src="/Logo.png" alt="logo" className="w-20 md:w-28 lg:w-32" />
+        </Link>
         <div>
           <label className="block mb-2 text-sm font-medium">Theme</label>
           <Select value={currentTheme} onValueChange={handleThemeChange}>

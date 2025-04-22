@@ -3,7 +3,6 @@ import { lazy, Suspense } from "react"
 import HomePage from "@/pages/HomePage"
 import PageLoader from "@/components/PageLoader"
 
-// Lazy load only secondary routes
 const ThemesDisplayPage = lazy(() => import("@/pages/ThemesDisplayPage"))
 const SplitPanel = lazy(
   () => import("@/components/UserDataForm/SplitPanel.tsx")
@@ -14,7 +13,7 @@ export const router = createBrowserRouter([
   {
     path: "/themes",
     element: (
-      <Suspense>
+      <Suspense fallback={<PageLoader />}>
         <ThemesDisplayPage />
       </Suspense>
     ),

@@ -21,7 +21,7 @@ import { Plus, Trash2 } from "lucide-react"
 import React from "react"
 import TiptapEditor from "./TiptapEditor"
 import { Input } from "../ui/input"
-import ProjectTechnologies from "./ProjectTechnologies"
+import SelectTechnologies from "./SelectTechnologies"
 
 export default function ProjectsData() {
   const dispatch = useDispatch()
@@ -44,7 +44,15 @@ export default function ProjectsData() {
   }
 
   const onSubmit = (data: ProjectsInfoData) => {
-    dispatch(updateUserData(data))
+    const updatedData = {
+      ...data,
+      projects: data.projects.map((project, idx) => ({
+        ...project,
+        technologies: userData.projects[idx]?.technologies || [],
+      })),
+    }
+
+    dispatch(updateUserData(updatedData))
     dispatch(nextStep())
   }
 
@@ -275,7 +283,7 @@ export default function ProjectsData() {
                 <FormItem>
                   Technical Skills
                   <FormControl>
-                    <ProjectTechnologies index={index} />
+                    <SelectTechnologies index={index} itemType={"projects"} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -296,7 +304,8 @@ export default function ProjectsData() {
             <Button
               type="button"
               variant="outline"
-              onClick={() =>
+              onClick={() => {
+                // Add opening curly brace here
                 append({
                   title: "",
                   description: "",
@@ -304,8 +313,24 @@ export default function ProjectsData() {
                   demoLink: "",
                   keyFeatures: [],
                   technologies: [],
-                })
-              }
+                }) // Add semicolon here
+
+                dispatch(
+                  updateUserData({
+                    projects: [
+                      ...userData.projects,
+                      {
+                        title: "",
+                        description: "",
+                        codeLink: "",
+                        demoLink: "",
+                        keyFeatures: [],
+                        technologies: [],
+                      },
+                    ],
+                  })
+                )
+              }}
               className="flex items-center gap-2"
             >
               <Plus className="w-4 h-4" />

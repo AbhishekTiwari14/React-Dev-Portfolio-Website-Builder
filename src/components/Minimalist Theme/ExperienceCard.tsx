@@ -26,7 +26,7 @@ export default function ExperienceCard({
       </p>
       <div className="flex flex-col justify-between gap-4">
         <p
-          className={`font-semibold text-md ${colors.primary} ${colors.groupHover}`}
+          className={`font-semibold text-md ${colors.primary} ${colors.groupHover} ${bp === "lg" ? "text-lg" : ""}`}
         >
           {designation
             ? designation

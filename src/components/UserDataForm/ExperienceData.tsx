@@ -29,6 +29,7 @@ import { Plus, Trash2 } from "lucide-react"
 import React from "react"
 import TiptapEditor from "./TiptapEditor"
 import { ExperienceInfoData, experienceInfoSchema } from "@/types/userDataTypes"
+import SelectTechnologies from "./SelectTechnologies"
 
 export default function ExperienceData() {
   const dispatch = useDispatch()
@@ -50,7 +51,15 @@ export default function ExperienceData() {
   }
 
   const onSubmit = (data: ExperienceInfoData) => {
-    dispatch(updateUserData(data))
+    const updatedData = {
+      ...data,
+      experiences: data.experiences.map((experience, idx) => ({
+        ...experience,
+        technologies: userData.experiences[idx]?.technologies || [],
+      })),
+    }
+
+    dispatch(updateUserData(updatedData))
     dispatch(nextStep())
   }
 
@@ -262,6 +271,22 @@ export default function ExperienceData() {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name={`experiences.${index}.technologies`}
+              render={() => (
+                <FormItem>
+                  Technical Skills
+                  <FormControl>
+                    <SelectTechnologies
+                      index={index}
+                      itemType={"experiences"}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             <div className="flex items-center my-6">
               <div className="flex-grow h-px bg-gray-300"></div>
@@ -285,6 +310,7 @@ export default function ExperienceData() {
                   designation: "",
                   company: "",
                   workSummary: "",
+                  technologies: [],
                 })
               }
               className="flex items-center gap-2"

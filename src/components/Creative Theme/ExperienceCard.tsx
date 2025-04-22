@@ -2,8 +2,8 @@ import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Calendar, Briefcase, Code } from "lucide-react"
-import { useSelector } from "react-redux"
-import { getActiveColors } from "@/lib/themeConfig"
+// import { useSelector } from "react-redux"
+// import { getActiveColors } from "@/lib/themeConfig"
 
 export default function ExperienceCard({
   fromYear,
@@ -24,7 +24,6 @@ export default function ExperienceCard({
 }) {
   const [isHovered, setIsHovered] = useState(false)
   const isLargePanel = bp === "lg" || bp === "xl"
-  const colors = useSelector(getActiveColors)
   return (
     <div className={`py-6 ${isLargePanel ? "w-3/4" : "w-full"}`}>
       <div
@@ -116,125 +115,49 @@ export default function ExperienceCard({
                   <span>Tech Stack</span>
                 </div>
 
-                <div className="flex flex-wrap gap-2">
-                  {techStack ? (
-                    techStack.map((tech, index) => (
-                      <Badge
-                        key={index}
-                        className={`bg-gray-100 hover:bg-gray-200 text-gray-800 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-200 transition-all duration-300 ${
-                          isHovered
-                            ? "transform translate-y-0"
-                            : "transform translate-y-0"
-                        }`}
-                        style={{
-                          transitionDelay: isHovered
-                            ? `${index * 50}ms`
-                            : "0ms",
-                        }}
-                      >
-                        {tech}
-                      </Badge>
-                    ))
-                  ) : (
-                    <>
-                      <Badge
-                        className={`bg-gray-800 hover:bg-gray-800 text-gray-100 transition-all duration-300 ${
-                          isHovered
-                            ? "transform translate-y-0"
-                            : "transform translate-y-0"
-                        }`}
-                        style={{
-                          transitionDelay: isHovered ? `50ms` : "0ms",
-                        }}
-                      >
-                        Javascript
-                      </Badge>
-                      <Badge
-                        className={`bg-gray-100 hover:bg-gray-200 text-gray-800 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-200 transition-all duration-300 ${
-                          isHovered
-                            ? "transform translate-y-0"
-                            : "transform translate-y-0"
-                        }`}
-                        style={{
-                          transitionDelay: isHovered ? `50ms` : "0ms",
-                        }}
-                      >
-                        React
-                      </Badge>
-                      <Badge
-                        className={`bg-gray-100 hover:bg-gray-200 text-gray-800 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-200 transition-all duration-300 ${
-                          isHovered
-                            ? "transform translate-y-0"
-                            : "transform translate-y-0"
-                        }`}
-                        style={{
-                          transitionDelay: isHovered ? `50ms` : "0ms",
-                        }}
-                      >
-                        Typescript
-                      </Badge>
-                      <Badge
-                        className={`bg-gray-100 hover:bg-gray-200 text-gray-800 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-200 transition-all duration-300 ${
-                          isHovered
-                            ? "transform translate-y-0"
-                            : "transform translate-y-0"
-                        }`}
-                        style={{
-                          transitionDelay: isHovered ? `50ms` : "0ms",
-                        }}
-                      >
-                        Redux
-                      </Badge>
-                      <Badge
-                        className={`bg-gray-100 hover:bg-gray-200 text-gray-800 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-200 transition-all duration-300 ${
-                          isHovered
-                            ? "transform translate-y-0"
-                            : "transform translate-y-0"
-                        }`}
-                        style={{
-                          transitionDelay: isHovered ? `50ms` : "0ms",
-                        }}
-                      >
-                        Shadcn
-                      </Badge>
-                      <Badge
-                        className={`bg-gray-100 hover:bg-gray-200 text-gray-800 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-200 transition-all duration-300 ${
-                          isHovered
-                            ? "transform translate-y-0"
-                            : "transform translate-y-0"
-                        }`}
-                        style={{
-                          transitionDelay: isHovered ? `50ms` : "0ms",
-                        }}
-                      >
-                        Zod
-                      </Badge>
-                      <Badge
-                        className={`bg-gray-100 hover:bg-gray-200 text-gray-800 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-200 transition-all duration-300 ${
-                          isHovered
-                            ? "transform translate-y-0"
-                            : "transform translate-y-0"
-                        }`}
-                        style={{
-                          transitionDelay: isHovered ? `50ms` : "0ms",
-                        }}
-                      >
-                        Framer
-                      </Badge>
-                      <Badge
-                        className={`bg-gray-100 hover:bg-gray-200 text-gray-800 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-200 transition-all duration-300 ${
-                          isHovered
-                            ? "transform translate-y-0"
-                            : "transform translate-y-0"
-                        }`}
-                        style={{
-                          transitionDelay: isHovered ? `50ms` : "0ms",
-                        }}
-                      >
-                        SCSS
-                      </Badge>
-                    </>
-                  )}
+                <div className="flex flex-wrap gap-2 pb-2">
+                  {techStack
+                    ? techStack.map((tech, index) => (
+                        <Badge
+                          key={index}
+                          className={`bg-gray-800 hover:bg-gray-800 text-gray-100 transition-all duration-300 ${
+                            isHovered
+                              ? "transform translate-y-0"
+                              : "transform translate-y-0"
+                          }`}
+                          style={{
+                            transitionDelay: isHovered ? `50ms` : "0ms",
+                          }}
+                        >
+                          {tech}
+                        </Badge>
+                      ))
+                    : [
+                        "Javascript",
+                        "Typescript",
+                        "Redux",
+                        "Tailwind",
+                        "SCSS",
+                        "ShadCN",
+                        "Zod",
+                        "Framer",
+                      ].map((value, index) => (
+                        <Badge
+                          key={index}
+                          className={`bg-gray-800 hover:bg-gray-800 text-gray-100 transition-all duration-300 ${
+                            isHovered
+                              ? "transform translate-y-0"
+                              : "transform translate-y-2"
+                          }`}
+                          style={{
+                            transitionDelay: isHovered
+                              ? `${index * 50}ms`
+                              : "0ms",
+                          }}
+                        >
+                          {value}
+                        </Badge>
+                      ))}
                 </div>
               </div>
             </CardContent>

@@ -16,9 +16,7 @@ export default function CreativeTheme() {
   const userData = useSelector((state: RootState) => state.userData.data)
 
   const colors = useSelector(getActiveColors)
-  const { elementRef, currentBreakpoint } = usePanelWidth()
-
-  // const isLargePanel = currentBreakpoint === "lg" || currentBreakpoint === "xl"
+  const { elementRef, currentBreakpoint } = usePanelWidth() 
 
   return (
     <div
@@ -27,12 +25,22 @@ export default function CreativeTheme() {
     >
       <BackgroundWithLines />
 
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center w-full">
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center w-full px-2">
         <motion.h1
           initial={{ y: 10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 1, damping: 0.3 }}
-          className="text-md sm:text-lg md:text-3xl lg:text-7xl xl:text-8xl font-bold text-center space md:tracking-wider text-white"
+          className={`font-bold text-center space md:tracking-wider text-white ${
+            currentBreakpoint === "sm"
+              ? "text-3xl"
+              : currentBreakpoint === "md"
+              ? "text-5xl"
+              : currentBreakpoint === "lg"
+              ? "text-7xl"
+              : currentBreakpoint === "xl"
+              ? "text-8xl"
+              : "text-md"
+          }`}
         >
           {userData.fullName ? userData.fullName : "ABHISHEK TIWARI"}
         </motion.h1>
@@ -40,9 +48,21 @@ export default function CreativeTheme() {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.3, damping: 0.3 }}
-          className="text-xs sm:text-sm md:text-lg lg:text-xl font-semibold text-white text-center md:tracking-wide lg:tracking-widest mt-5"
+          className={`font-semibold text-white text-center md: lg: mt-5 ${
+            currentBreakpoint === "sm"
+              ? "text-md"
+              : currentBreakpoint === "md"
+              ? "text-lg tracking-wide"
+              : currentBreakpoint === "lg"
+              ? "text-2xl tracking-wider"
+              : currentBreakpoint === "xl"
+              ? "text-4xl tracking-widest"
+              : "text-sm"
+          }`}
         >
-          FRONT-END DEVELOPER, UI-ENGINEER, & DESIGNER
+          {userData.description
+            ? userData.description
+            : "FRONT-END DEVELOPER, UI-ENGINEER, & DESIGNER"}
         </motion.h3>
       </div>
       <AboutSection bp={currentBreakpoint} />
@@ -82,16 +102,25 @@ export default function CreativeTheme() {
         </p>
         <div
           className={`grid gap-12 ${
-            currentBreakpoint === "sm"
+            currentBreakpoint === "sm" || currentBreakpoint === "md"
               ? "grid-cols-1"
-              : currentBreakpoint === "md" || currentBreakpoint === "lg"
+              : currentBreakpoint === "lg"
               ? "grid-cols-2"
               : "grid-cols-3"
           }`}
         >
-          <ProjectCard />
-          <ProjectCard />
-          <ProjectCard />
+          {userData?.projects?.length > 1 ||
+          !IsObjectEmpty(userData?.projects[0]) ? (
+            userData?.projects.map((project, index) => (
+              <ProjectCard key={index} {...project} />
+            ))
+          ) : (
+            <>
+              <ProjectCard />
+              <ProjectCard />
+              <ProjectCard />
+            </>
+          )}
         </div>
       </div>
       <Footer />

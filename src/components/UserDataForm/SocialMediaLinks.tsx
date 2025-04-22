@@ -21,18 +21,10 @@ import {
   socialMediaLinksSchema,
 } from "@/types/userDataTypes"
 import { RootState } from "@/utils/store"
-import SelectTechnologies from "./SelectTechnologies"
-import { useEffect, useState } from "react"
 
 export default function SocialMediaLinks() {
-  const [minSkillsSatisfied, setMinSkillsSatisfied] = useState(true)
-
   const dispatch = useDispatch()
   const userData = useSelector((state: RootState) => state.userData.data)
-
-  useEffect(() => {
-    if (userData?.Technologies?.length >= 5) setMinSkillsSatisfied(true)
-  }, [userData?.Technologies?.length])
 
   const form = useForm<socialMediaLinksData>({
     resolver: zodResolver(socialMediaLinksSchema),
@@ -40,7 +32,6 @@ export default function SocialMediaLinks() {
       Github: userData?.Github || "",
       LinkedIn: userData?.LinkedIn || "",
       Gmail: userData?.Gmail || "",
-      Technologies: userData?.Technologies || [],
     },
   })
 
@@ -50,12 +41,11 @@ export default function SocialMediaLinks() {
   }
 
   const onSubmit = (data: socialMediaLinksData) => {
-    if (userData.Technologies.length < 5) {
-      setMinSkillsSatisfied(false)
-      return
-    }
+    // if (userData.Technologies.length < 5) {
+    //   setMinSkillsSatisfied(false)
+    //   return
+    // }
     dispatch(updateUserData(data))
-    dispatch(updateUserData({ Technologies: userData.Technologies }))
     dispatch(nextStep())
   }
 
@@ -120,26 +110,6 @@ export default function SocialMediaLinks() {
                 />
               </FormControl>
               <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="Technologies"
-          render={() => (
-            <FormItem>
-              <FormLabel
-                className={`${!minSkillsSatisfied ? "text-red-600" : ""}`}
-              >
-                Technical Skills
-              </FormLabel>
-              <FormControl>
-                <SelectTechnologies />
-              </FormControl>
-              <FormMessage />
-              {!minSkillsSatisfied && (
-                <p className="text-sm text-red-600">Add minimum 5 skills</p>
-              )}
             </FormItem>
           )}
         />

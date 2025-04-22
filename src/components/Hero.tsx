@@ -37,7 +37,7 @@ export default function Hero() {
           className="h-screen w-full flex flex-col justify-center items-center"
         >
           <Link to="/">
-            <img src="/Lgoo.png" alt="logo" className="w-40 md:w-60 lg:w-80" />
+            <img src="/Logo.png" alt="logo" className="w-40 md:w-60 lg:w-80" />
           </Link>
           <p className="text-2xl text-slate-200 mb-4 tracking-tight">
             No Code Portfoilio Website Builder

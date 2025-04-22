@@ -18,14 +18,20 @@ import { useDispatch, useSelector } from "react-redux"
 import { updateUserData } from "@/utils/slices/userDataSlice"
 import { RootState } from "@/utils/store"
 
-export default function SelectTechnologies() {
+export default function TechnologiesSelector({
+  itemType, // 'projects' or 'experiences'
+  index,
+}: {
+  itemType: "projects" | "experiences"
+  index: number
+}) {
   const [isOpen, setIsOpen] = useState(false)
-
-  const userData = useSelector((state: RootState) => state?.userData?.data)
-
+  const userData = useSelector((state: RootState) => state.userData.data)
   const technologies = useMemo(() => technologiesList, [])
-
   const dispatch = useDispatch()
+
+  // Get the current technologies for this item
+  const currentTechnologies = userData[itemType][index]?.technologies || []
 
   // Find the label for a given value
   const getLabelForValue = (value: string) => {
@@ -35,20 +41,52 @@ export default function SelectTechnologies() {
 
   // Toggle selection of a technology
   const addValue = (value: string) => {
+    const updatedTechnologies = [...currentTechnologies, value]
+
+    // Create the updated item
+    const updatedItem = {
+      ...userData[itemType][index],
+      technologies: updatedTechnologies,
+    }
+
+    // Create the updated array
+    const updatedItems = [
+      ...userData[itemType].slice(0, index),
+      updatedItem,
+      ...userData[itemType].slice(index + 1),
+    ]
+
+    // Dispatch the update
     dispatch(
       updateUserData({
-        Technologies: [...userData.Technologies, value],
+        [itemType]: updatedItems,
       })
     )
   }
+
   // Remove a technology from selection
   const removeValue = (value: string, e: React.MouseEvent) => {
     e.preventDefault()
-    e.stopPropagation() // Prevent triggering the Popover
+    e.stopPropagation()
 
-    const currentTechnologies = userData.Technologies
-    const newTechnologies = currentTechnologies.filter((v) => v !== value)
-    dispatch(updateUserData({ Technologies: newTechnologies }))
+    const newTechs = currentTechnologies.filter((v) => v !== value)
+
+    const updatedItem = {
+      ...userData[itemType][index],
+      technologies: newTechs,
+    }
+
+    const updatedItems = [
+      ...userData[itemType].slice(0, index),
+      updatedItem,
+      ...userData[itemType].slice(index + 1),
+    ]
+
+    dispatch(
+      updateUserData({
+        [itemType]: updatedItems,
+      })
+    )
   }
 
   return (
@@ -61,8 +99,8 @@ export default function SelectTechnologies() {
             className="justify-between w-full h-auto"
           >
             <div className="flex flex-wrap gap-1 items-center">
-              {userData.Technologies.length > 0 ? (
-                userData.Technologies.map((value) => (
+              {currentTechnologies.length > 0 ? (
+                currentTechnologies.map((value) => (
                   <div
                     key={value}
                     className="flex items-center bg-gray-100 rounded px-2 py-1 text-sm p-2"
@@ -91,7 +129,7 @@ export default function SelectTechnologies() {
             <CommandList>
               <CommandEmpty>No skill found.</CommandEmpty>
               {technologies.map((tech) => {
-                const isSelected = userData.Technologies.includes(tech.value)
+                const isSelected = currentTechnologies.includes(tech.value)
                 return (
                   <CommandItem
                     key={tech.value}

@@ -1,6 +1,9 @@
 import { motion, useAnimation } from "framer-motion"
 import { lazy, Suspense, useEffect, useRef } from "react"
 import { BackgroundStars } from "../BackgroundStars"
+import { RootState } from "@/utils/store"
+import { useSelector } from "react-redux"
+// import { getActiveColors } from "@/lib/themeConfig"
 
 const InteractiveGlobe = lazy(() => import("./InteractiveGlobe"))
 
@@ -12,6 +15,8 @@ export default function AboutSection({ bp }: { bp: string }) {
   useEffect(() => {
     console.log("isLarge: ", isLargePanel, "bp: ", bp)
   }, [bp, isLargePanel])
+
+  const userData = useSelector((state: RootState) => state.userData.data)
 
   const lineVariants = {
     hidden: { scaleX: 0 },
@@ -61,13 +66,18 @@ export default function AboutSection({ bp }: { bp: string }) {
   return (
     <div
       ref={sectionRef}
-      className="bg-[#020b18] h-full w-full px-12 md:px-16 lg:px-24 pt-12 relative overflow-hidden pb-8"
+      className={`bg-[#020b18] min-h-fit w-full pt-12 relative overflow-hidden pb-8 ${
+        bp === "sm" ? "px-6" : bp === "md" ? "px-12" : "px-24"
+      }`}
     >
-      {/* Stars background for the entire section */}
       <BackgroundStars />
 
       <div className="lg:relative z-10">
-        <div className="w-full lg:w-1/2 flex items-center gap-4 mt-4 pb-8">
+        <div
+          className={`w-full lg:w-1/2 flex items-center gap-4 mt-4 ${
+            bp === "sm" ? "pb-3" : bp === "md" ? "pb-5" : "pb-6"
+          }`}
+        >
           <p className="text-slate-200 text-md sm:text-lg md:text-xl lg:text-3xl font-bold whitespace-nowrap">
             About Me
           </p>
@@ -80,26 +90,30 @@ export default function AboutSection({ bp }: { bp: string }) {
         </div>
         {isLargePanel ? (
           <div className="block lg:grid lg:grid-cols-2 lg:gap-6 place-items-center">
-            <p className="text-white font-semibold">
-              Front End Engineer I build accessible, pixel-perfect digital
-              experiences for the web. About Experience Projects GitHub LinkedIn
-              CodePen Instagram Goodreads About I'm a developer passionate about
-              crafting accessible, pixel-perfect user interfaces that blend
-              thoughtful design with robust engineering. My favorite work lies
-              at the intersection of design and development, creating
-              experiences that not only look great but are meticulously built
-              for performance and usability. Currently, I'm a Senior Front-End
-              Engineer at Klaviyo, specializing in accessibility. I contribute
-              to the creation and maintenance of UI components that power
-              Klaviyo's frontend, ensuring our platform meets web accessibility
-              standards and best practices to deliver an inclusive user
-              experience. In the past, I've had the opportunity to develop
-              software across a variety of settings — from advertising agencies
-              and large corporations to start-ups and small digital product
-              studios. Additionally, I also released a comprehensive video
-              course a few years ago, guiding learners through building a web
-              app with the Spotify API.
-            </p>
+            {userData.about ? (
+              <div
+                className="text-white font-semibold"
+                dangerouslySetInnerHTML={{ __html: userData.about }}
+              />
+            ) : (
+              <p className="text-white font-semibold text-lg lg:tracking-wider">
+                I'm a developer who creates accessible, pixel-perfect user
+                interfaces combining thoughtful design with solid engineering.
+                My passion lies where design meets development—building
+                experiences that are visually appealing while optimized for
+                performance and usability. I'm dedicated to crafting interfaces
+                that not only look great but function flawlessly, bridging the
+                gap between aesthetics and technical excellence while
+                prioritizing accessibility throughout the development process.
+                <br />
+                <br />
+                Currently serving as a Senior Front-End Engineer at Klaviyo with
+                a focus on accessibility, I help develop and maintain UI
+                components powering the platform's frontend. My work ensures our
+                product adheres to web accessibility standards and best
+                practices, creating an inclusive experience for all users.
+              </p>
+            )}
             <div className="hidden lg:block h-full w-full mt-8 lg:mt-0">
               <Suspense
                 fallback={
@@ -115,27 +129,31 @@ export default function AboutSection({ bp }: { bp: string }) {
             </div>
           </div>
         ) : (
-          <div className="block p-2">
-            <p className="text-white text-lg font-semibold tracking-wider">
-              Front End Engineer I build accessible, pixel-perfect digital
-              experiences for the web. About Experience Projects GitHub LinkedIn
-              CodePen Instagram Goodreads About I'm a developer passionate about
-              crafting accessible, pixel-perfect user interfaces that blend
-              thoughtful design with robust engineering. My favorite work lies
-              at the intersection of design and development, creating
-              experiences that not only look great but are meticulously built
-              for performance and usability. Currently, I'm a Senior Front-End
-              Engineer at Klaviyo, specializing in accessibility. I contribute
-              to the creation and maintenance of UI components that power
-              Klaviyo's frontend, ensuring our platform meets web accessibility
-              standards and best practices to deliver an inclusive user
-              experience. In the past, I've had the opportunity to develop
-              software across a variety of settings — from advertising agencies
-              and large corporations to start-ups and small digital product
-              studios. Additionally, I also released a comprehensive video
-              course a few years ago, guiding learners through building a web
-              app with the Spotify API.
-            </p>
+          <div className="block p-1 overflow-none">
+            {userData.about ? (
+              <div
+                className="text-white font-semibold tracking-wider"
+                dangerouslySetInnerHTML={{ __html: userData.about }}
+              />
+            ) : (
+              <p className="text-white font-semibold text-md tracking-wider h-full w-full">
+                I'm a developer who creates accessible, pixel-perfect user
+                interfaces combining thoughtful design with solid engineering.
+                My passion lies where design meets development—building
+                experiences that are visually appealing while optimized for
+                performance and usability. I'm dedicated to crafting interfaces
+                that not only look great but function flawlessly, bridging the
+                gap between aesthetics and technical excellence while
+                prioritizing accessibility throughout the development process.
+                <br />
+                <br />
+                Currently serving as a Senior Front-End Engineer at Klaviyo with
+                a focus on accessibility, I help develop and maintain UI
+                components powering the platform's frontend. My work ensures our
+                product adheres to web accessibility standards and best
+                practices, creating an inclusive experience for all users.
+              </p>
+            )}
           </div>
         )}
       </div>

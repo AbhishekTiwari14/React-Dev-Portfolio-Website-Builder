@@ -38,7 +38,7 @@ export default function Edit() {
 
       // Calculate percentage (constrained between 20% and 80%)
       let newLeftWidth = (mouseX / containerWidth) * 100
-      newLeftWidth = Math.max(20, Math.min(80, newLeftWidth))
+      newLeftWidth = Math.max(25, Math.min(80, newLeftWidth))
 
       setLeftPanelWidth(newLeftWidth)
       setPreviewWidth(95 - newLeftWidth)

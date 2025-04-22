@@ -31,7 +31,6 @@ export const socialMediaLinksSchema = z.object({
   Github: z.string().min(1, "You must add your Github link"),
   LinkedIn: z.string().min(1, "You must add your Linkedin link"),
   Gmail: z.string().email(),
-  Technologies: z.array(z.string()),
 })
 
 export const experienceInfoSchema = z.object({
@@ -42,6 +41,7 @@ export const experienceInfoSchema = z.object({
       designation: z.string().min(1, "Designation Missing"),
       company: z.string().min(1, "Company Missing"),
       workSummary: z.string().min(1, "Work Summary Missing"),
+      technologies: z.array(z.string()),
     })
   ),
 })

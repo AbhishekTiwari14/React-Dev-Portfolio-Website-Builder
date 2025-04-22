@@ -19,7 +19,6 @@ const initialState: userDataState = {
     Github: "",
     LinkedIn: "",
     Gmail: "",
-    Technologies: [],
 
     // Experience Information
     experiences: [
@@ -29,6 +28,7 @@ const initialState: userDataState = {
         designation: "",
         company: "",
         workSummary: "",
+        technologies: [],
       },
     ],
 

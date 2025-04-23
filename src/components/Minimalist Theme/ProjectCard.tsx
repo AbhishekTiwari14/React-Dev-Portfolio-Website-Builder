@@ -61,7 +61,7 @@ export default function ProjectCard({
               technologies.map((tech, index) => (
                 <span
                   key={index}
-                  className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded"
+                  className={`flex items-center rounded-full ${colors?.btn} px-3 py-1 text-xs font-medium leading-5`}
                 >
                   {tech}
                 </span>

@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom"
 import { lazy, Suspense } from "react"
 import HomePage from "@/pages/HomePage"
 import PageLoader from "@/components/PageLoader"
+import GitHubData from "@/components/GithubData"
 
 const ThemesDisplayPage = lazy(() => import("@/pages/ThemesDisplayPage"))
 const SplitPanel = lazy(
@@ -21,9 +22,11 @@ export const router = createBrowserRouter([
   {
     path: "/edit",
     element: (
-      <Suspense fallback={<PageLoader />}>
-        <SplitPanel />
-      </Suspense>
+      <GitHubData>
+        <Suspense fallback={<PageLoader />}>
+          <SplitPanel />
+        </Suspense>
+      </GitHubData>
     ),
   },
 ])

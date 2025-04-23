@@ -1,17 +1,8 @@
 import { motion } from "motion/react"
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 
 export default function AppFeatures() {
   return (
-    <>
+    <div className="w-full bg-slate-950">
       <div className="container mx-auto px-4 py-20">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           <motion.div
@@ -145,23 +136,6 @@ export default function AppFeatures() {
           </motion.div>
         </div>
       </div>
-      <div>
-        <Select>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select a fruit" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Fruits</SelectLabel>
-              <SelectItem value="apple">Apple</SelectItem>
-              <SelectItem value="banana">Banana</SelectItem>
-              <SelectItem value="blueberry">Blueberry</SelectItem>
-              <SelectItem value="grapes">Grapes</SelectItem>
-              <SelectItem value="pineapple">Pineapple</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-      </div>
-    </>
+    </div>
   )
 }

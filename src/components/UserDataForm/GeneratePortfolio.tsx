@@ -29,9 +29,8 @@ export default function GeneratePortfolio() {
 
   const [isOpen, setIsOpen] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [result, setResult] = useState<any>(null)
   const [error, setError] = useState<string | null>(null)
-  const [formData, setFormData] = useState({
+  const formData = {
     palette: currentPalette,
     fullName: userData.fullName,
     title: userData.title,
@@ -42,7 +41,7 @@ export default function GeneratePortfolio() {
     Gmail: userData.Gmail,
     experiences: userData.experiences,
     projects: userData.projects,
-  })
+  }
 
   // Determine active step based on the loading states
   const determineActiveStep = () => {
@@ -50,18 +49,16 @@ export default function GeneratePortfolio() {
     if (isUpdatingFile) return 2
     if (isDeploying) return 3
 
-    // If we have a deployed URL, all steps are complete
     if (deployedUrl) return 4
 
-    // Default to 1 if no operation has started
     return isOpen ? 1 : 0
   }
 
   const [activeStep, setActiveStep] = useState(determineActiveStep())
 
-  // Update active step based on Redux loading states
   useEffect(() => {
     setActiveStep(determineActiveStep())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCreatingRepo, isUpdatingFile, isDeploying, deployedUrl])
 
   const steps = [
@@ -106,14 +103,13 @@ export default function GeneratePortfolio() {
     setError(null)
 
     try {
-      const result = await createPortfolioWebsite(
+      await createPortfolioWebsite(
         dispatch,
         "AbhishekTiwari14",
         `portfolio-${currentTheme}-theme`,
         formData
       )
 
-      setResult(result)
     } catch (err: unknown) {
       const errorMessage =
         err instanceof Error ? err.message : "Failed to create portfolio"

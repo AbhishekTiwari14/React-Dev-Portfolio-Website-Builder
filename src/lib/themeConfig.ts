@@ -1,4 +1,5 @@
 import { RootState } from "@/utils/store"
+import { ThemeConfig } from "../types"
 
 export const themes: ThemeConfig = {
   minimalist: {

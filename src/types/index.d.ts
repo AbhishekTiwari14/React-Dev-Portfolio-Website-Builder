@@ -6,7 +6,7 @@ type ThemePalette = {
   [key: string]: string
 }
 
-type ThemeConfig = {
+export type ThemeConfig = {
   [themeName: string]: {
     palettes: {
       [paletteName: string]: ThemePalette

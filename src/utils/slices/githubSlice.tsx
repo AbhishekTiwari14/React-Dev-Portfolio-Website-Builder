@@ -25,7 +25,6 @@ const initialState: GithubState = {
   },
 }
 
-// Async thunks for API calls
 export const fetchUserData = createAsyncThunk(
   "github/fetchUserData",
   async (token: string) => {
@@ -97,7 +96,6 @@ export const createRepoFromTemplate = createAsyncThunk(
   }
 )
 
-// For updating a file in a repo (your data file)
 export const updateRepoFile = createAsyncThunk(
   "github/updateRepoFile",
   async (
@@ -116,7 +114,6 @@ export const updateRepoFile = createAsyncThunk(
 
     if (!token) throw new Error("No access token available")
 
-    // First, check if file exists to get its SHA if it does
     let sha
     try {
       const getFileResponse = await fetch(
@@ -134,7 +131,6 @@ export const updateRepoFile = createAsyncThunk(
         sha = fileData.sha
       }
     } catch (error) {
-      // File probably doesn't exist yet, which is fine
       console.log(error)
     }
 
@@ -146,7 +142,13 @@ export const updateRepoFile = createAsyncThunk(
       )
     )
 
-    const updateBody: any = {
+    interface UpdateBodyType {
+      message: string
+      content: string
+      sha?: string // Make sha an optional property
+    }
+
+    const updateBody: UpdateBodyType = {
       message,
       content: encodedContent,
     }
@@ -186,7 +188,6 @@ export const deployToGitHubPages = createAsyncThunk(
     if (!token) throw new Error("No access token available")
     if (!username) throw new Error("User data not available")
 
-    // Try to enable GitHub Pages from the dist directory in the main branch
     try {
       const response = await fetch(
         `https://api.github.com/repos/${username}/${repo}/pages`,
@@ -199,8 +200,8 @@ export const deployToGitHubPages = createAsyncThunk(
           },
           body: JSON.stringify({
             source: {
-              branch: "main", // Deploy from main branch instead of gh-pages
-              path: "/docs", // Point to the pre-built dist directory
+              branch: "main",
+              path: "/docs",
             },
           }),
         }
@@ -209,7 +210,6 @@ export const deployToGitHubPages = createAsyncThunk(
       if (!response.ok) {
         const error = await response.json()
 
-        // If GitHub Pages is already enabled, that's fine, we can continue
         if (error.message && error.message.includes("already enabled")) {
           console.log("GitHub Pages already enabled, continuing...")
         } else {
@@ -220,16 +220,14 @@ export const deployToGitHubPages = createAsyncThunk(
           )
         }
       }
-    } catch (error) {
-      // If GitHub Pages is already enabled, that's fine
-      if (error.message && error.message.includes("already enabled")) {
+    } catch (error: unknown) {
+      if (error instanceof Error && error.message.includes("already enabled")) {
         console.log("GitHub Pages already enabled, continuing...")
       } else {
         throw error
       }
     }
 
-    // Return the URL where the site will be published
     return {
       url: `https://${username}.github.io/${repo}/`,
       repoUrl: `https://github.com/${username}/${repo}`,
@@ -259,7 +257,6 @@ const githubSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // User data fetching
       .addCase(fetchUserData.pending, (state) => {
         state.loading.user = true
         state.error.user = null
@@ -272,7 +269,6 @@ const githubSlice = createSlice({
         state.loading.user = false
         state.error.user = action.error.message || "Failed to fetch user data"
       })
-      // Repositories fetching
       .addCase(fetchUserRepos.pending, (state) => {
         state.loading.repos = true
         state.error.repos = null
@@ -302,7 +298,6 @@ const githubSlice = createSlice({
           "Failed to create repository, this can be because repo with you name already exists on your github"
       })
 
-      // Cases for updateRepoFile
       .addCase(updateRepoFile.pending, (state) => {
         state.loading.updateFile = true
         state.error.updateFile = null

@@ -8,13 +8,9 @@ import { useSelector } from "react-redux"
 const InteractiveGlobe = lazy(() => import("./InteractiveGlobe"))
 
 export default function AboutSection({ bp }: { bp: string }) {
-  const isLargePanel = bp === "lg" || bp === "xl"
+  const isLargePanel = bp === "lg" || bp === "xl" || bp === "2xl"
   const controls = useAnimation()
   const sectionRef = useRef(null)
-
-  useEffect(() => {
-    console.log("isLarge: ", isLargePanel, "bp: ", bp)
-  }, [bp, isLargePanel])
 
   const userData = useSelector((state: RootState) => state.userData.data)
 
@@ -34,28 +30,22 @@ export default function AboutSection({ bp }: { bp: string }) {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          // When the section enters the viewport
           if (entry.isIntersecting) {
-            // Play the animation
             controls.start("animate")
           } else {
-            // Reset the animation when out of view
             controls.start("hidden")
           }
         })
       },
-      { threshold: 0.1 } // Trigger when at least 10% of the element is visible
+      { threshold: 0.1 }
     )
 
-    // Store the current value of the ref in a variable
     const currentRef = sectionRef.current
 
     if (currentRef) {
       observer.observe(currentRef)
     }
 
-    // Clean up the observer when component unmounts
-    // Use the stored variable instead of accessing sectionRef.current directly
     return () => {
       if (currentRef) {
         observer.unobserve(currentRef)
@@ -89,7 +79,7 @@ export default function AboutSection({ bp }: { bp: string }) {
           />
         </div>
         {isLargePanel ? (
-          <div className="block lg:grid lg:grid-cols-2 lg:gap-6 place-items-center">
+          <div className="grid grid-cols-2 gap-6 place-items-center">
             {userData.about ? (
               <div
                 className="text-white font-semibold"
@@ -114,7 +104,7 @@ export default function AboutSection({ bp }: { bp: string }) {
                 practices, creating an inclusive experience for all users.
               </p>
             )}
-            <div className="hidden lg:block h-full w-full mt-8 lg:mt-0">
+            <div className="h-full w-full mt-8 lg:mt-0">
               <Suspense
                 fallback={
                   <img

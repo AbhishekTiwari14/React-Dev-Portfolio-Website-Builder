@@ -3,7 +3,7 @@ type ThemePalette = {
   primary: string
   secondary: string
   accent: string
-  [key: string]: string 
+  [key: string]: string
 }
 
 type ThemeConfig = {
@@ -26,6 +26,8 @@ export type GithubRepo = {
 }
 
 export type GithubState = {
+  portfolioRepo: any
+  deployedUrl: string | null
   user: {
     login: string
     avatar_url: string
@@ -38,9 +40,15 @@ export type GithubState = {
   loading: {
     user: boolean
     repos: boolean
+    createRepo: boolean
+    updateFile: boolean
+    deployPages: boolean
   }
   error: {
     user: string | null
     repos: string | null
+    createRepo: null | string
+    updateFile: null | string
+    deployPages: null | string
   }
 }

@@ -16,7 +16,7 @@ export default function CreativeTheme() {
   const userData = useSelector((state: RootState) => state.userData.data)
 
   const colors = useSelector(getActiveColors)
-  const { elementRef, currentBreakpoint } = usePanelWidth() 
+  const { elementRef, currentBreakpoint } = usePanelWidth()
 
   return (
     <div
@@ -37,9 +37,7 @@ export default function CreativeTheme() {
               ? "text-5xl"
               : currentBreakpoint === "lg"
               ? "text-7xl"
-              : currentBreakpoint === "xl"
-              ? "text-8xl"
-              : "text-md"
+              : "text-8xl"
           }`}
         >
           {userData.fullName ? userData.fullName : "ABHISHEK TIWARI"}
@@ -48,16 +46,14 @@ export default function CreativeTheme() {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.3, damping: 0.3 }}
-          className={`font-semibold text-white text-center md: lg: mt-5 ${
+          className={`font-semibold text-white text-center mt-3 ${
             currentBreakpoint === "sm"
               ? "text-md"
               : currentBreakpoint === "md"
               ? "text-lg tracking-wide"
               : currentBreakpoint === "lg"
               ? "text-2xl tracking-wider"
-              : currentBreakpoint === "xl"
-              ? "text-4xl tracking-widest"
-              : "text-sm"
+              : "text-4xl tracking-widest"
           }`}
         >
           {userData.description
@@ -123,7 +119,11 @@ export default function CreativeTheme() {
           )}
         </div>
       </div>
-      <Footer />
+      <Footer
+        LinkedIn={userData.LinkedIn}
+        Github={userData.Github}
+        Gmail={userData.Gmail}
+      />
     </div>
   )
 }

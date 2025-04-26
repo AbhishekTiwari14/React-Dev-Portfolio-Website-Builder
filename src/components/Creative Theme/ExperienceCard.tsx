@@ -2,8 +2,6 @@ import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Calendar, Briefcase, Code } from "lucide-react"
-// import { useSelector } from "react-redux"
-// import { getActiveColors } from "@/lib/themeConfig"
 
 export default function ExperienceCard({
   fromYear,
@@ -11,7 +9,7 @@ export default function ExperienceCard({
   designation,
   company,
   workSummary,
-  techStack,
+  technologies,
   bp,
 }: {
   fromYear?: string
@@ -19,11 +17,11 @@ export default function ExperienceCard({
   designation?: string
   company?: string
   workSummary?: string
-  techStack?: string[]
+  technologies?: string[]
   bp: string
 }) {
   const [isHovered, setIsHovered] = useState(false)
-  const isLargePanel = bp === "lg" || bp === "xl"
+  const isLargePanel = bp === "lg" || bp === "xl" || bp === "2xl"
   return (
     <div className={`py-6 ${isLargePanel ? "w-3/4" : "w-full"}`}>
       <div
@@ -31,7 +29,6 @@ export default function ExperienceCard({
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        {/* Clean border animation */}
         <div
           className={`absolute inset-0 rounded-xl transition-all duration-500 border-2 ${
             isHovered ? "border-blue-500" : "border-transparent"
@@ -43,7 +40,6 @@ export default function ExperienceCard({
 
         <Card className="shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden bg-gray-900 border-0 pt-0">
           <div className="relative overflow-hidden">
-            {/* Accent line that animates on hover */}
             <div
               className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-indigo-600 transition-transform duration-500 ${
                 isHovered
@@ -73,7 +69,6 @@ export default function ExperienceCard({
                   </div>
                 </div>
 
-                {/* Clean date display */}
                 <div className="flex items-center space-x-1 text-sm text-gray-400">
                   <Calendar className="h-3.5 w-3.5" />
                   <span>
@@ -85,23 +80,21 @@ export default function ExperienceCard({
 
             <CardContent className="space-y-4">
               <div className="relative">
-                <p className="text-gray-300 text-sm leading-relaxed">
-                  {workSummary ? (
-                    <div
-                      // className={`${colors.secondary} ${
-                      //   isLargePanel ? "text-xl font-medium" : ""
-                      // }`}
-                      dangerouslySetInnerHTML={{ __html: workSummary }}
-                    />
-                  ) : (
-                    `Build and maintain critical components used to construct Klaviyo’s
-          frontend, across the whole product. Work closely with cross-functional
-          teams, including developers, designers, and product managers, to
-          implement and advocate for best practices in web accessibility.`
-                  )}
-                </p>
+                {workSummary ? (
+                  <p
+                    className="text-gray-300 text-md"
+                    dangerouslySetInnerHTML={{ __html: workSummary }}
+                  />
+                ) : (
+                  <p className="text-gray-300 text-md">
+                    Built and maintained critical components used to construct
+                    Google's frontend, across the whole product. Worked closely
+                    with cross-functional teams, including developers,
+                    designers, and product managers, to implement and advocate
+                    for best practices in web accessibility.
+                  </p>
+                )}
 
-                {/* Subtle highlight line that appears on hover */}
                 <div
                   className={`absolute -left-4 top-0 w-1 h-full bg-blue-200 dark:bg-blue-800 transition-opacity duration-300 ${
                     isHovered ? "opacity-100" : "opacity-0"
@@ -116,17 +109,19 @@ export default function ExperienceCard({
                 </div>
 
                 <div className="flex flex-wrap gap-2 pb-2">
-                  {techStack
-                    ? techStack.map((tech, index) => (
+                  {technologies && technologies.length >= 1
+                    ? technologies.map((tech, index) => (
                         <Badge
                           key={index}
                           className={`bg-gray-800 hover:bg-gray-800 text-gray-100 transition-all duration-300 ${
                             isHovered
                               ? "transform translate-y-0"
-                              : "transform translate-y-0"
+                              : "transform translate-y-2"
                           }`}
                           style={{
-                            transitionDelay: isHovered ? `50ms` : "0ms",
+                            transitionDelay: isHovered
+                              ? `${index * 50}ms`
+                              : "0ms",
                           }}
                         >
                           {tech}

@@ -27,18 +27,20 @@ export default function ProjectCard({
         <h3 className="text-xl font-bold mb-2 text-white">
           {title ? title : "Movie Ticket Booking App"}
         </h3>
-        <p className="text-gray-50 mb-4">
-          {description ? (
-            <div
-              // className={`${colors.secondary} ${
-              //   isLargePanel ? "text-xl font-medium" : ""
-              // }`}
-              dangerouslySetInnerHTML={{ __html: description }}
-            />
-          ) : (
-            "A web app which handles movie ticket bookings, and has features such as handling concurrent bookings, and optimized with lazy loading and code splitting"
-          )}
-        </p>
+
+        {description ? (
+          <div
+            className="text-gray-50 mb-4"
+            dangerouslySetInnerHTML={{ __html: description }}
+          />
+        ) : (
+          <p className="text-gray-50 mb-4">
+            A web app which handles movie ticket bookings, and has features such
+            as handling concurrent bookings, and optimized with lazy loading and
+            code splitting
+          </p>
+        )}
+
         <div className="text-slate-300 text-sm space-y-2 pt-2 py-6">
           <h3 className="font-medium text-cyan-300">Key Features:</h3>
           <ul className="list-disc pl-5 space-y-1">

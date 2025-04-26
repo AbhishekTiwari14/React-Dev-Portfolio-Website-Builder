@@ -21,13 +21,11 @@ export default function Edit() {
   const previewContainerRef = useRef<HTMLDivElement>(null)
   const [previewWidth, setPreviewWidth] = useState(50)
 
-  // Handle mouse down on divider
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
     setIsResizing(true)
   }
 
-  // Handle mouse move to resize panels
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (!isResizing || !containerRef.current) return
@@ -36,7 +34,6 @@ export default function Edit() {
       const containerWidth = containerRect.width
       const mouseX = e.clientX - containerRect.left
 
-      // Calculate percentage (constrained between 20% and 80%)
       let newLeftWidth = (mouseX / containerWidth) * 100
       newLeftWidth = Math.max(25, Math.min(80, newLeftWidth))
 
@@ -62,7 +59,6 @@ export default function Edit() {
   useEffect(() => {
     if (!previewContainerRef.current) return
 
-    // Store a reference to the current element
     const element = previewContainerRef.current
 
     const updatePreviewWidth = () => {
@@ -71,15 +67,12 @@ export default function Edit() {
       }
     }
 
-    // Initial width
     updatePreviewWidth()
 
-    // Create ResizeObserver to watch for size changes
     const resizeObserver = new ResizeObserver(updatePreviewWidth)
     resizeObserver.observe(element)
 
     return () => {
-      // Use the stored reference in cleanup
       if (element) {
         resizeObserver.unobserve(element)
       }
@@ -91,7 +84,6 @@ export default function Edit() {
       setShowLeftPanel(false)
     } else {
       setShowLeftPanel(true)
-      // Restore a reasonable width if right panel is also showing
       if (showRightPanel) {
         setLeftPanelWidth(50)
       } else {
@@ -105,7 +97,6 @@ export default function Edit() {
       setShowRightPanel(false)
     } else {
       setShowRightPanel(true)
-      // Restore a reasonable width if left panel is also showing
       if (showLeftPanel) {
         setLeftPanelWidth(50)
       } else {
@@ -114,10 +105,8 @@ export default function Edit() {
     }
   }
 
-  // Determine which preview size to use
   const getPreviewSize = () => {
     if (previewMode !== "auto") {
-      // Return explicit sizes based on selected mode
       switch (previewMode) {
         case "mobile":
           return { width: 375, height: "100%" }
@@ -130,7 +119,6 @@ export default function Edit() {
       }
     }
 
-    // Auto mode - determine size based on container width
     if (previewWidth < 640) {
       return { width: 375, height: "100%" } // Mobile
     } else if (previewWidth < 1024) {
@@ -165,7 +153,6 @@ export default function Edit() {
 
   return (
     <>
-      {/* Mobile view (unchanged) */}
       <Tabs
         defaultValue="account"
         className="w-full min-h-screen my-4 lg:hidden"
@@ -184,10 +171,7 @@ export default function Edit() {
           <MinimalistTheme />
         </TabsContent>
       </Tabs>
-
-      {/* Desktop view (enhanced) */}
       <div className="hidden lg:block w-full h-screen bg-gray-100 overflow-hidden">
-        {/* Header with controls */}
         <div className="flex items-center justify-between px-6 py-3 bg-white border-b border-gray-200">
           <h1 className="text-xl font-bold text-primary">Portfolio Builder</h1>
 
@@ -270,9 +254,7 @@ export default function Edit() {
           </div>
         </div>
 
-        {/* Main content area with resizable panels */}
         <div ref={containerRef} className="flex h-[calc(100vh-57px)] relative">
-          {/* Editor panel */}
           {showLeftPanel && (
             <div
               className="bg-white border-r border-gray-200 overflow-hidden transition-width duration-300 ease-in-out"
@@ -284,7 +266,6 @@ export default function Edit() {
             </div>
           )}
 
-          {/* Resizable divider */}
           {showLeftPanel && showRightPanel && (
             <div
               ref={dividerRef}
@@ -296,7 +277,6 @@ export default function Edit() {
             />
           )}
 
-          {/* Preview panel */}
           {showRightPanel && (
             <div
               ref={previewContainerRef}
@@ -306,7 +286,6 @@ export default function Edit() {
               }}
             >
               <div className="h-full p-4 overflow-y-auto flex flex-col items-center">
-                {/* Preview container with device frame */}
                 <div
                   className={`relative flex-1 overflow-y-auto overflow-x-hidden ${
                     isMobilePreview || isTabletPreview
@@ -320,14 +299,12 @@ export default function Edit() {
                     transition: "width 0.3s ease",
                   }}
                 >
-                  {/* Device chrome indicators */}
                   {isMobilePreview && (
                     <div className="h-6 bg-gray-800 w-full flex justify-center items-center rounded-t-lg">
                       <div className="w-20 h-1 bg-gray-600 rounded-full"></div>
                     </div>
                   )}
 
-                  {/* Preview content */}
                   <div className="overflow-x-hidden w-full">
                     <MinimalistTheme />
                   </div>

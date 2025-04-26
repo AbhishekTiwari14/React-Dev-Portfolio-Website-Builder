@@ -3,7 +3,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { Button } from "@/components/ui/button"
 import { ChevronsUpDown, X } from "lucide-react"
 import {
   Command,
@@ -93,17 +92,21 @@ export default function TechnologiesSelector({
     <div className="flex flex-col gap-2">
       <Popover open={isOpen} onOpenChange={setIsOpen}>
         <PopoverTrigger asChild>
-          <Button
-            variant="outline"
-            role="combobox"
-            className="justify-between w-full h-auto"
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={() => setIsOpen(!isOpen)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") setIsOpen(!isOpen)
+            }}
+            className="flex justify-between w-full h-auto border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md px-3 py-2 text-sm"
           >
             <div className="flex flex-wrap gap-1 items-center">
               {currentTechnologies.length > 0 ? (
                 currentTechnologies.map((value) => (
                   <div
                     key={value}
-                    className="flex items-center bg-gray-100 rounded px-2 py-1 text-sm p-2"
+                    className="flex items-center bg-gray-100 rounded px-2 py-1 text-sm"
                   >
                     {getLabelForValue(value)}
                     <button
@@ -121,7 +124,7 @@ export default function TechnologiesSelector({
               )}
             </div>
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-          </Button>
+          </div>
         </PopoverTrigger>
         <PopoverContent className="w-full p-0" align="start">
           <Command className="rounded-lg border shadow-md md:min-w-[450px]">

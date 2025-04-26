@@ -31,7 +31,6 @@ export default function AboutData() {
     },
   })
 
-  // Simpler approach: dispatch partial updates directly
   const updateField = (field: Partial<PersonalInfoData>) => {
     dispatch(updateUserData(field))
   }

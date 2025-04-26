@@ -50,13 +50,12 @@ export default function ProjectCard({
       return
     }
 
-    // Start the shine animation immediately
     setShinePosition(-100)
 
     shineIntervalRef.current = window.setInterval(() => {
       setShinePosition((prev) => {
         if (prev > 200) return -100
-        return prev + 3 // Move even faster for more noticeable shine
+        return prev + 3
       })
     }, 10)
 
@@ -68,7 +67,6 @@ export default function ProjectCard({
     }
   }, [isHovered])
 
-  // Enhanced parallax effect
   useEffect(() => {
     if (!cardRef.current) return
 
@@ -76,24 +74,20 @@ export default function ProjectCard({
       if (cardRef.current) {
         const rect = cardRef.current.getBoundingClientRect()
 
-        // Calculate mouse position relative to the center of the card
         const centerX = rect.left + rect.width / 2
         const centerY = rect.top + rect.height / 2
 
-        // Create more pronounced effect by calculating distance from center
         const x = (e.clientX - centerX) / (rect.width / 2)
         const y = (e.clientY - centerY) / (rect.height / 2)
 
-        // Set mouse position with enhanced effect range
         setMousePosition({
-          x: x * 30, // Increased from 20 to 30 for more evident effect
-          y: y * 20, // Kept at 20 to avoid excessive vertical tilt
+          x: x * 30,
+          y: y * 20,
         })
       }
     }
 
     const resetMousePosition = () => {
-      // Smoothly reset card position when mouse leaves
       setMousePosition({ x: 0, y: 0 })
       setIsHovered(false)
     }
@@ -113,7 +107,6 @@ export default function ProjectCard({
     }
   }, [])
 
-  // Card variants for animations
   const cardVariants = {
     hover: {
       scale: 1.05,
@@ -164,11 +157,9 @@ export default function ProjectCard({
     },
   }
 
-  // Calculate transform style based on mouse position with smoother transitions
   const getCardTransform = () => {
     if (!isHovered) return "perspective(1200px) rotateY(0deg) rotateX(0deg)"
 
-    // Apply a smoother, more pronounced parallax effect
     return `perspective(1200px) rotateY(${mousePosition.x * 0.08}deg) rotateX(${
       -mousePosition.y * 0.04
     }deg)`
@@ -179,7 +170,7 @@ export default function ProjectCard({
       ref={cardRef}
       className="perspective-1200 w-full"
       style={{
-        perspective: "1200px", // Set perspective on container for better 3D effect
+        perspective: "1200px",
         transformStyle: "preserve-3d",
       }}
       animate={isFlipped ? "flipped" : "normal"}
@@ -190,20 +181,18 @@ export default function ProjectCard({
         style={{
           transformStyle: "preserve-3d",
           transform: getCardTransform(),
-          transition: "transform 0.2s cubic-bezier(0.23, 1, 0.32, 1)", // Use more natural easing
-          transformOrigin: "center center", // Better origin point for rotation
-          willChange: "transform", // Hint for browser to optimize
+          transition: "transform 0.2s cubic-bezier(0.23, 1, 0.32, 1)",
+          transformOrigin: "center center",
+          willChange: "transform",
           backfaceVisibility: "hidden",
         }}
       >
-        {/* Front of Card */}
         <motion.div
           className={`w-full h-full ${isFlipped ? "hidden" : "block"}`}
           style={{
             backfaceVisibility: "hidden",
             willChange: "transform",
             transformStyle: "preserve-3d",
-            // Text optimization to prevent blur
             WebkitFontSmoothing: "antialiased",
             MozOsxFontSmoothing: "grayscale",
           }}
@@ -212,19 +201,17 @@ export default function ProjectCard({
           variants={cardVariants}
         >
           <Card className="w-full bg-gradient-to-br from-slate-900 to-slate-800 border-slate-700 text-slate-100 overflow-hidden">
-            {/* Enhanced shine effect */}
             <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden">
               <div
                 className="absolute top-0 bottom-0 w-40 h-full bg-gradient-to-r from-transparent via-white to-transparent"
                 style={{
                   left: `${shinePosition}%`,
                   transform: "skewX(-20deg)",
-                  opacity: 0.2, // Increased opacity for more visible shine
+                  opacity: 0.2,
                 }}
               />
             </div>
 
-            {/* Add subtle shadow effect that moves opposite to card tilt */}
             <div
               className="absolute inset-0 pointer-events-none opacity-60"
               style={{
@@ -244,7 +231,7 @@ export default function ProjectCard({
                 animate="visible"
                 style={{
                   backfaceVisibility: "hidden",
-                  transform: "translateZ(1px)", // Slight offset to prevent z-fighting
+                  transform: "translateZ(1px)",
                 }}
               >
                 <motion.div variants={itemVariants}>
@@ -257,12 +244,6 @@ export default function ProjectCard({
                     {title ? title : "Movie Ticket Booking App"}
                   </CardTitle>
                 </motion.div>
-                <motion.div variants={itemVariants}>
-                  <CardDescription className="text-slate-300">
-                    Generate stunning AI images using stable diffusion
-                    technology
-                  </CardDescription>
-                </motion.div>
               </motion.div>
             </CardHeader>
 
@@ -274,7 +255,6 @@ export default function ProjectCard({
                 className="space-y-4"
                 style={{
                   backfaceVisibility: "hidden",
-                  // Improve text rendering
                   transform: "translateZ(1px)",
                 }}
               >
@@ -282,40 +262,46 @@ export default function ProjectCard({
                   variants={itemVariants}
                   className="flex flex-wrap gap-2"
                 >
-                  {technologies ||
-                    [
-                      "React",
-                      "Three.js",
-                      "WebGL",
-                      "TensorFlow",
-                      "Tailwind",
-                    ].map((tech) => (
-                      <Badge
-                        key={tech}
-                        variant="outline"
-                        className="bg-slate-800 text-slate-200 border-slate-600"
-                      >
-                        {tech}
-                      </Badge>
-                    ))}
+                  {technologies && technologies.length >= 1
+                    ? technologies.map((tech) => (
+                        <Badge
+                          key={tech}
+                          variant="outline"
+                          className="bg-slate-800 text-slate-200 border-slate-600"
+                        >
+                          {tech}
+                        </Badge>
+                      ))
+                    : [
+                        "React",
+                        "Three.js",
+                        "WebGL",
+                        "TensorFlow",
+                        "Tailwind",
+                      ].map((tech) => (
+                        <Badge
+                          key={tech}
+                          variant="outline"
+                          className="bg-slate-800 text-slate-200 border-slate-600"
+                        >
+                          {tech}
+                        </Badge>
+                      ))}
                 </motion.div>
 
                 <motion.div
                   variants={itemVariants}
                   className="text-slate-300 text-sm"
                 >
-                  <p>
-                    {description ? (
-                      <div
-                        // className={`${colors.secondary} ${
-                        //   isLargePanel ? "text-xl font-medium" : ""
-                        // }`}
-                        dangerouslySetInnerHTML={{ __html: description }}
-                      />
-                    ) : (
-                      "A web app which handles movie ticket bookings, and has features such as handling concurrent bookings, and optimized with lazy loading and code splitting"
-                    )}
-                  </p>
+                  {description ? (
+                    <div dangerouslySetInnerHTML={{ __html: description }} />
+                  ) : (
+                    <p>
+                      A web app which handles movie ticket bookings, and has
+                      features such as handling concurrent bookings, and
+                      optimized with lazy loading and code splitting
+                    </p>
+                  )}
                 </motion.div>
 
                 <motion.div
@@ -388,7 +374,6 @@ export default function ProjectCard({
               </motion.div>
             </CardFooter>
 
-            {/* Enhanced animated corner decorations that respond to motion */}
             <div
               className="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-cyan-500/40 to-transparent rounded-br-full"
               style={{
@@ -413,8 +398,6 @@ export default function ProjectCard({
             />
           </Card>
         </motion.div>
-
-        {/* Back of Card */}
         <motion.div
           className={`w-full h-full absolute top-0 left-0 ${
             isFlipped ? "block" : "hidden"
@@ -424,7 +407,6 @@ export default function ProjectCard({
             transform: "rotateY(180deg)",
             willChange: "transform",
             transformStyle: "preserve-3d",
-            // Text optimization
             WebkitFontSmoothing: "antialiased",
             MozOsxFontSmoothing: "grayscale",
           }}
@@ -433,14 +415,13 @@ export default function ProjectCard({
           variants={cardVariants}
         >
           <Card className="w-full h-full bg-gradient-to-br from-slate-900 to-slate-800 border-slate-700 text-slate-100">
-            {/* Enhanced shine effect (back card) */}
             <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden">
               <div
                 className="absolute top-0 bottom-0 w-40 h-full bg-gradient-to-r from-transparent via-white to-transparent"
                 style={{
                   left: `${shinePosition}%`,
                   transform: "skewX(-20deg)",
-                  opacity: 0.2, // Increased opacity
+                  opacity: 0.2,
                 }}
               />
             </div>
@@ -564,7 +545,6 @@ export default function ProjectCard({
               </motion.div>
             </CardFooter>
 
-            {/* Enhanced animated corner decorations for back side */}
             <div
               className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-cyan-500/40 to-transparent rounded-bl-full"
               style={{

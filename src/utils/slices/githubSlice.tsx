@@ -1,18 +1,27 @@
 import { GithubRepo, GithubState } from "@/types"
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
+import { RootState } from "../store"
 
 const initialState: GithubState = {
+  portfolioRepo: null,
   user: null,
+  deployedUrl: null,
   repositories: [],
   selectedRepos: [],
   accessToken: null,
   loading: {
     user: false,
     repos: false,
+    createRepo: false,
+    updateFile: false,
+    deployPages: false,
   },
   error: {
     user: null,
     repos: null,
+    createRepo: null,
+    updateFile: null,
+    deployPages: null,
   },
 }
 
@@ -45,6 +54,186 @@ export const fetchUserRepos = createAsyncThunk(
     )
     if (!response.ok) throw new Error("Failed to fetch repositories")
     return response.json()
+  }
+)
+
+export const createRepoFromTemplate = createAsyncThunk(
+  "github/createRepoFromTemplate",
+  async (
+    params: {
+      templateOwner: string
+      templateRepo: string
+      repoName: string
+      description: string
+    },
+    { getState }
+  ) => {
+    const { templateOwner, templateRepo, repoName, description } = params
+    const state = getState() as RootState
+    const token = state.github.accessToken
+
+    if (!token) throw new Error("No access token available")
+
+    const response = await fetch(
+      `https://api.github.com/repos/${templateOwner}/${templateRepo}/generate`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/vnd.github.baptiste-preview+json",
+        },
+        body: JSON.stringify({
+          owner: state?.github?.user?.login,
+          name: repoName,
+          description: description,
+          private: false,
+        }),
+      }
+    )
+
+    if (!response.ok)
+      throw new Error("Failed to create repository from template")
+    return response.json()
+  }
+)
+
+// For updating a file in a repo (your data file)
+export const updateRepoFile = createAsyncThunk(
+  "github/updateRepoFile",
+  async (
+    params: {
+      owner: string
+      repo: string
+      path: string
+      content: string
+      message: string
+    },
+    { getState }
+  ) => {
+    const { owner, repo, path, content, message } = params
+    const state = getState() as RootState
+    const token = state.github.accessToken
+
+    if (!token) throw new Error("No access token available")
+
+    // First, check if file exists to get its SHA if it does
+    let sha
+    try {
+      const getFileResponse = await fetch(
+        `https://api.github.com/repos/${owner}/${repo}/contents/${path}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/vnd.github.v3+json",
+          },
+        }
+      )
+
+      if (getFileResponse.ok) {
+        const fileData = await getFileResponse.json()
+        sha = fileData.sha
+      }
+    } catch (error) {
+      // File probably doesn't exist yet, which is fine
+      console.log(error)
+    }
+
+    // Now update or create file
+    const encodedContent = btoa(
+      new Uint8Array(new TextEncoder().encode(content)).reduce(
+        (data, byte) => data + String.fromCharCode(byte),
+        ""
+      )
+    )
+
+    const updateBody: any = {
+      message,
+      content: encodedContent,
+    }
+
+    if (sha) updateBody.sha = sha
+
+    const response = await fetch(
+      `https://api.github.com/repos/${owner}/${repo}/contents/${path}`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/vnd.github.v3+json",
+        },
+        body: JSON.stringify(updateBody),
+      }
+    )
+
+    if (!response.ok) throw new Error("Failed to update file")
+    return response.json()
+  }
+)
+
+export const deployToGitHubPages = createAsyncThunk(
+  "github/deployToGitHubPages",
+  async (
+    params: {
+      repo: string
+    },
+    { getState }
+  ) => {
+    const { repo } = params
+    const state = getState() as RootState
+    const token = state.github.accessToken
+    const username = state.github.user?.login
+
+    if (!token) throw new Error("No access token available")
+    if (!username) throw new Error("User data not available")
+
+    // Try to enable GitHub Pages from the dist directory in the main branch
+    try {
+      const response = await fetch(
+        `https://api.github.com/repos/${username}/${repo}/pages`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/vnd.github.v3+json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            source: {
+              branch: "main", // Deploy from main branch instead of gh-pages
+              path: "/docs", // Point to the pre-built dist directory
+            },
+          }),
+        }
+      )
+
+      if (!response.ok) {
+        const error = await response.json()
+
+        // If GitHub Pages is already enabled, that's fine, we can continue
+        if (error.message && error.message.includes("already enabled")) {
+          console.log("GitHub Pages already enabled, continuing...")
+        } else {
+          throw new Error(
+            `Failed to enable GitHub Pages: ${
+              error.message || JSON.stringify(error)
+            }`
+          )
+        }
+      }
+    } catch (error) {
+      // If GitHub Pages is already enabled, that's fine
+      if (error.message && error.message.includes("already enabled")) {
+        console.log("GitHub Pages already enabled, continuing...")
+      } else {
+        throw error
+      }
+    }
+
+    // Return the URL where the site will be published
+    return {
+      url: `https://${username}.github.io/${repo}/`,
+      repoUrl: `https://github.com/${username}/${repo}`,
+    }
   }
 )
 
@@ -98,6 +287,47 @@ const githubSlice = createSlice({
         state.loading.repos = false
         state.error.repos =
           action.error.message || "Failed to fetch repositories"
+      })
+      .addCase(createRepoFromTemplate.pending, (state) => {
+        state.loading.createRepo = true
+        state.error.createRepo = null
+      })
+      .addCase(createRepoFromTemplate.fulfilled, (state, action) => {
+        state.loading.createRepo = false
+        state.repositories.unshift(action.payload)
+      })
+      .addCase(createRepoFromTemplate.rejected, (state) => {
+        state.loading.createRepo = false
+        state.error.createRepo =
+          "Failed to create repository, this can be because repo with you name already exists on your github"
+      })
+
+      // Cases for updateRepoFile
+      .addCase(updateRepoFile.pending, (state) => {
+        state.loading.updateFile = true
+        state.error.updateFile = null
+      })
+      .addCase(updateRepoFile.fulfilled, (state) => {
+        state.loading.updateFile = false
+        state.error.updateFile = null
+      })
+      .addCase(updateRepoFile.rejected, (state, action) => {
+        state.loading.updateFile = false
+        state.error.updateFile =
+          action.error.message || "Failed to update repository data file"
+      })
+      .addCase(deployToGitHubPages.pending, (state) => {
+        state.loading.deployPages = true
+        state.error.deployPages = null
+      })
+      .addCase(deployToGitHubPages.fulfilled, (state, action) => {
+        state.loading.deployPages = false
+        state.deployedUrl = action.payload.url
+      })
+      .addCase(deployToGitHubPages.rejected, (state, action) => {
+        state.loading.deployPages = false
+        state.error.deployPages =
+          action.error.message || "Failed to deploy to GitHub Pages"
       })
   },
 })

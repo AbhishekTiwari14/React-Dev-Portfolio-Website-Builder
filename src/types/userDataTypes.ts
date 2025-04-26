@@ -6,7 +6,7 @@ export const personalInfoSchema = z.object({
   description: z.string().min(2, "Description must be at least 10 characters"),
   about: z.string().superRefine((text, ctx) => {
     const wordCount = text.trim().split(/\s+/).filter(Boolean).length
-    if (wordCount < 120) {
+    if (wordCount < 100) {
       ctx.addIssue({
         code: z.ZodIssueCode.too_small,
         minimum: 100,
@@ -15,7 +15,7 @@ export const personalInfoSchema = z.object({
         message: "Summary must be at least 100 words long.",
       })
     }
-    if (wordCount > 140) {
+    if (wordCount > 120) {
       ctx.addIssue({
         code: z.ZodIssueCode.too_big,
         maximum: 120,

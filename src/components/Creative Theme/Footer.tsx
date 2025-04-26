@@ -2,7 +2,15 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import { motion } from "motion/react"
 
-export default function Footer() {
+export default function Footer({
+  LinkedIn,
+  Github,
+  Gmail,
+}: {
+  LinkedIn: string
+  Github: string
+  Gmail: string
+}) {
   const [animatingIcons, setAnimatingIcons] = useState([false, false, false])
 
   const iconToIndex = (icon: string) => {
@@ -31,7 +39,7 @@ export default function Footer() {
     <>
       <footer className="py-12 flex justify-center items-center bg-slate-950 gap-20">
         <Link
-          to="/github.com"
+          to={Github}
           className="text-white p-4 bg-gray-800 hover:bg-blue-600 overflow-hidden"
           onMouseEnter={() => startAnimation("github")}
         >
@@ -59,7 +67,7 @@ export default function Footer() {
           </motion.svg>
         </Link>
         <Link
-          to="/"
+          to={LinkedIn}
           className="text-white p-4 bg-gray-800 hover:bg-blue-600 overflow-hidden"
           onMouseEnter={() => startAnimation("linkedin")}
         >
@@ -86,8 +94,9 @@ export default function Footer() {
             <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"></path>
           </motion.svg>
         </Link>
-        <Link
-          to="/"
+        <a
+          href={`mailto:${Gmail}`}
+          target="_blank"
           className="text-white p-4 bg-gray-800 hover:bg-blue-600 overflow-hidden"
           onMouseEnter={() => startAnimation("gmail")}
         >
@@ -130,7 +139,7 @@ export default function Footer() {
               d="M45,12.298V16.2l-10,7.5V11.2l3.124-2.341C38.868,8.301,39.772,8,40.702,8h0 C43.076,8,45,9.924,45,12.298z"
             ></path>
           </motion.svg>
-        </Link>
+        </a>
       </footer>
     </>
   )

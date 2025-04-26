@@ -50,7 +50,6 @@ const TiptapEditor = ({
               ? "bg-purple-500 text-white"
               : "hover:bg-gray-300"
           }`}
-          type="button"
         >
           Bold
         </button>
@@ -61,7 +60,6 @@ const TiptapEditor = ({
               ? "bg-purple-500 text-white"
               : "hover:bg-gray-300"
           }`}
-          type="button"
         >
           Italic
         </button>
@@ -72,14 +70,12 @@ const TiptapEditor = ({
               ? "bg-purple-500 text-white"
               : "hover:bg-gray-300"
           }`}
-          type="button"
         >
           Underline
         </button>
         <button
           onClick={() => editor.chain().focus().setHardBreak().run()}
           className="px-2 py-1 mx-0.5 rounded-lg font-semibold bg-gray-100 hover:bg-gray-300"
-          type="button"
         >
           New Line
         </button>

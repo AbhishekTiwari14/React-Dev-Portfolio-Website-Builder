@@ -5,6 +5,7 @@ import { useSelector } from "react-redux"
 import { RootState } from "@/utils/store"
 import CreativeTheme from "../Creative Theme/CreativeTheme"
 import MinimalistTheme from "../Minimalist Theme/MinimalistTheme"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 export default function SplitPanel() {
   const [isDragging, setIsDragging] = useState(false)
@@ -80,72 +81,93 @@ export default function SplitPanel() {
   }
 
   return (
-    <div className="hidden lg:block w-full h-screen bg-gray-100 overflow-hidden">
-      {/* Header with controls */}
-      <div className="flex items-center justify-between px-6 py-3 bg-white border-b border-gray-200">
-        <h1 className="text-xl font-bold text-primary">Portfolio Builder</h1>
-
-        <div className="flex items-center space-x-2">
-          <div className="h-6 border-r border-gray-300"></div>
-          <button
-            onClick={() => handleViewType("phone")}
-            className={`p-2 rounded-md ${
-              view === "phone" ? "bg-gray-200" : "hover:bg-gray-100"
-            }`}
-          >
-            <SmartphoneIcon className="w-5 h-5" />
-          </button>
-          <button
-            onClick={() => handleViewType("tablet")}
-            className={`p-2 rounded-md ${
-              view === "tablet" ? "bg-gray-200" : "hover:bg-gray-100"
-            }`}
-          >
-            <TabletIcon className="w-5 h-5" />
-          </button>
-
-          <button
-            onClick={() => handleViewType("fullscreen")}
-            className={`p-2 rounded-md ${
-              view === "fullscreen" ? "bg-gray-200" : "hover:bg-gray-100"
-            }`}
-          >
-            <Fullscreen className="w-5 h-5" />
-          </button>
-        </div>
-      </div>
-      <div id="split-pane-container" className="flex h-full w-full relative">
-        {view !== "fullscreen" && (
-          <>
-            <div
-              className="h-full overflow-auto p-2 pt-0"
-              style={{ width: `${splitPosition}%` }}
-            >
-              <div className="h-full p-4">
-                <FormStep />
-              </div>
-            </div>
-
-            <div
-              className="w-2 bg-gray-400 hover:bg-blue-400 cursor-col-resize active:bg-blue-600 transition-colors"
-              onMouseDown={handleMouseDown}
-              style={{
-                cursor: isDragging ? "col-resize" : undefined,
-              }}
-            />
-          </>
-        )}
-
-        <div
-          className="h-full overflow-y-scroll"
-          style={{ width: `${100 - splitPosition}%` }}
+    <>
+      <Tabs defaultValue="edit" className="w-full min-h-screen my-4 lg:hidden">
+        <TabsList className="grid max-w-[400px] grid-cols-2 ml-4 bg-slate-200">
+          <TabsTrigger value="edit">Edit</TabsTrigger>
+          <TabsTrigger value="preview">Preview</TabsTrigger>
+        </TabsList>
+        <TabsContent
+          value="edit"
+          className="border-2 border-gray-200 p-8 bg-gray-50 h-full"
         >
+          <FormStep />
+        </TabsContent>
+        <TabsContent value="preview">
           {currentTheme === "creative" && <CreativeTheme />}
           {currentTheme === "minimalist" && <MinimalistTheme />}
-        </div>
+        </TabsContent>
+      </Tabs>
 
-        {isDragging && <div className="fixed inset-0 z-50 cursor-col-resize" />}
+      <div className="hidden lg:block w-full h-screen bg-gray-100 overflow-hidden">
+        {/* Header with controls */}
+        <div className="flex items-center justify-between px-6 py-3 bg-white border-b border-gray-200">
+          <h1 className="text-xl font-bold text-primary">Portfolio Builder</h1>
+
+          <div className="flex items-center space-x-2">
+            <div className="h-6 border-r border-gray-300"></div>
+            <button
+              onClick={() => handleViewType("phone")}
+              className={`p-2 rounded-md ${
+                view === "phone" ? "bg-gray-200" : "hover:bg-gray-100"
+              }`}
+            >
+              <SmartphoneIcon className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => handleViewType("tablet")}
+              className={`p-2 rounded-md ${
+                view === "tablet" ? "bg-gray-200" : "hover:bg-gray-100"
+              }`}
+            >
+              <TabletIcon className="w-5 h-5" />
+            </button>
+
+            <button
+              onClick={() => handleViewType("fullscreen")}
+              className={`p-2 rounded-md ${
+                view === "fullscreen" ? "bg-gray-200" : "hover:bg-gray-100"
+              }`}
+            >
+              <Fullscreen className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+        <div id="split-pane-container" className="flex h-full w-full relative">
+          {view !== "fullscreen" && (
+            <>
+              <div
+                className="h-full overflow-auto p-2 pt-0"
+                style={{ width: `${splitPosition}%` }}
+              >
+                <div className="h-full p-4">
+                  <FormStep />
+                </div>
+              </div>
+
+              <div
+                className="w-2 bg-gray-400 hover:bg-blue-400 cursor-col-resize active:bg-blue-600 transition-colors"
+                onMouseDown={handleMouseDown}
+                style={{
+                  cursor: isDragging ? "col-resize" : undefined,
+                }}
+              />
+            </>
+          )}
+
+          <div
+            className="h-full overflow-y-scroll"
+            style={{ width: `${100 - splitPosition}%` }}
+          >
+            {currentTheme === "creative" && <CreativeTheme />}
+            {currentTheme === "minimalist" && <MinimalistTheme />}
+          </div>
+
+          {isDragging && (
+            <div className="fixed inset-0 z-50 cursor-col-resize" />
+          )}
+        </div>
       </div>
-    </div>
+    </>
   )
 }

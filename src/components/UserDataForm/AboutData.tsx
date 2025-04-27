@@ -19,7 +19,7 @@ import { PersonalInfoData, personalInfoSchema } from "@/types/userDataTypes"
 export default function AboutData() {
   const dispatch = useDispatch()
   const userData = useSelector((state: RootState) => state?.userData?.data)
-  const { currentTheme } = useSelector((state: RootState) => state.theme)
+  const { currentTheme } = useSelector((state: RootState) => state?.theme)
 
   const form = useForm<PersonalInfoData>({
     resolver: zodResolver(personalInfoSchema),

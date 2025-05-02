@@ -43,13 +43,10 @@ export async function createPortfolioWebsite(
   userData: UserData
 ) {
   try {
-    // Format the repo name
-    console.log("userData: ", userData)
     const repoName = `${userData.fullName
       .toLowerCase()
       .replace(/\s/g, "-")}-portfolio`
 
-    // Step 1: Create the repo from template
     const repoResult = await dispatch(
       createRepoFromTemplate({
         templateOwner,
@@ -62,7 +59,6 @@ export async function createPortfolioWebsite(
     console.log("Repository created, waiting before updating file...")
     await new Promise((resolve) => setTimeout(resolve, 3000)) // Wait 3 seconds
     console.log("Now updating file...")
-    // Step 2: Update the data file
     const userDataJson = JSON.stringify(userData, null, 2)
     await dispatch(
       updateRepoFile({

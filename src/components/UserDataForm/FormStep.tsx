@@ -13,10 +13,18 @@ export default function FormStep() {
     (state: RootState) => state?.userData?.currentStep
   )
 
+  const { user } = useSelector((state: RootState) => state.github)
+
   const steps = [
-    { component: <AboutData />, icon: UserIcon, title: "Personal Information" },
     {
-      component: <SocialMediaLinks />,
+      component: <AboutData name={user?.name} bio={user?.bio} />,
+      icon: UserIcon,
+      title: "Personal Information",
+    },
+    {
+      component: (
+        <SocialMediaLinks html_url={user?.html_url} email={user?.email} />
+      ),
       icon: MailIcon,
       title: "Social Media Links",
     },
@@ -39,6 +47,7 @@ export default function FormStep() {
         <h2 className="text-xl font-bold text-primary">
           {steps[currentStep].title}
         </h2>
+        {currentStep === 2 && <button>Select Repositories</button>}
       </div>
       <div className="bg-card p-6 pb-9 rounded-lg shadow flex-1 overflow-y-auto">
         {steps[currentStep].component}

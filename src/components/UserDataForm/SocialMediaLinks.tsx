@@ -22,29 +22,30 @@ import {
 } from "@/types/userDataTypes"
 import { RootState } from "@/utils/store"
 
-export default function SocialMediaLinks() {
+export default function SocialMediaLinks({
+  html_url,
+  email,
+}: {
+  html_url?: string
+  email?: string
+}) {
   const dispatch = useDispatch()
   const userData = useSelector((state: RootState) => state.userData.data)
 
   const form = useForm<socialMediaLinksData>({
     resolver: zodResolver(socialMediaLinksSchema),
     defaultValues: {
-      Github: userData?.Github || "",
+      Github: html_url || "",
       LinkedIn: userData?.LinkedIn || "",
-      Gmail: userData?.Gmail || "",
+      Gmail: email || userData?.Gmail,
     },
   })
 
-  // Simpler approach: dispatch partial updates directly
   const updateField = (field: Partial<socialMediaLinksData>) => {
     dispatch(updateUserData(field))
   }
 
   const onSubmit = (data: socialMediaLinksData) => {
-    // if (userData.Technologies.length < 5) {
-    //   setMinSkillsSatisfied(false)
-    //   return
-    // }
     dispatch(updateUserData(data))
     dispatch(nextStep())
   }
@@ -78,7 +79,7 @@ export default function SocialMediaLinks() {
           name="LinkedIn"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>LinkedIn Link</FormLabel>
+              <FormLabel>LinkedIn Link *</FormLabel>
               <FormControl>
                 <Input
                   placeholder="Paste your LinkedIn link here"

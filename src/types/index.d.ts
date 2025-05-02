@@ -33,6 +33,8 @@ export type GithubState = {
     avatar_url: string
     name: string
     bio: string
+    html_url: string
+    email: string
   } | null
   repositories: GithubRepo[]
   selectedRepos: GithubRepo[]

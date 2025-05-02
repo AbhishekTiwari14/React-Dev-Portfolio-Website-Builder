@@ -16,7 +16,13 @@ import { RootState } from "@/utils/store"
 import TiptapEditor from "./TiptapEditor"
 import { PersonalInfoData, personalInfoSchema } from "@/types/userDataTypes"
 
-export default function AboutData() {
+export default function AboutData({
+  name,
+  bio,
+}: {
+  name?: string
+  bio?: string
+}) {
   const dispatch = useDispatch()
   const userData = useSelector((state: RootState) => state?.userData?.data)
   const { currentTheme } = useSelector((state: RootState) => state?.theme)
@@ -24,10 +30,10 @@ export default function AboutData() {
   const form = useForm<PersonalInfoData>({
     resolver: zodResolver(personalInfoSchema),
     defaultValues: {
-      fullName: userData.fullName,
+      fullName: name?.toUpperCase() || userData.fullName,
       title: userData.title,
       description: userData.description,
-      about: userData.about,
+      about: bio || userData.about,
     },
   })
 

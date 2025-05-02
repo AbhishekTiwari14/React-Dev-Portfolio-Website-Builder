@@ -21,7 +21,7 @@ export default function GitHubData({
   const { user, error } = useSelector((state: RootState) => state.github)
 
   useEffect(() => {
-    console.log(user)
+    console.log("usergit: ", user)
   }, [user])
 
   const handleLogin = async () => {

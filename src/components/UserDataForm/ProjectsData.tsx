@@ -147,17 +147,13 @@ export default function ProjectsData() {
                   <FormControl>
                     <div className="space-y-2">
                       <Input
-                        placeholder="pehla feature"
+                        placeholder="First Feature"
                         value={field.value?.[0] || ""}
                         onChange={(e) => {
-                          // Create a copy of the current keyFeatures array or initialize empty array
                           const updatedFeatures = [...(field.value || [])]
                           updatedFeatures[0] = e.target.value
 
-                          // Update form field
                           field.onChange(updatedFeatures)
-
-                          // Update userData state
                           updateField({
                             projects: [
                               ...userData.projects.slice(0, index),
@@ -171,7 +167,7 @@ export default function ProjectsData() {
                         }}
                       />
                       <Input
-                        placeholder="dusra feature"
+                        placeholder="Second Feature"
                         value={field.value?.[1] || ""}
                         onChange={(e) => {
                           const updatedFeatures = [...(field.value || [])]
@@ -192,7 +188,7 @@ export default function ProjectsData() {
                         }}
                       />
                       <Input
-                        placeholder="teesra feature"
+                        placeholder="Third Feature"
                         value={field.value?.[2] || ""}
                         onChange={(e) => {
                           const updatedFeatures = [...(field.value || [])]

@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input"
 import { RootState } from "@/utils/store"
 import TiptapEditor from "./TiptapEditor"
 import { PersonalInfoData, personalInfoSchema } from "@/types/userDataTypes"
+import { useEffect } from "react"
 
 export default function AboutData({
   name,
@@ -36,6 +37,16 @@ export default function AboutData({
       about: bio || userData.about,
     },
   })
+
+  useEffect(() => {
+    form.reset({
+      fullName: userData.fullName,
+      title: userData.title,
+      description: userData.description,
+      about: bio || userData.about,
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userData, name, bio])
 
   const updateField = (field: Partial<PersonalInfoData>) => {
     dispatch(updateUserData(field))

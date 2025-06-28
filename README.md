@@ -6,9 +6,10 @@ A powerful, responsive no-code portfolio generator that enables developers to cr
 
 [![Portfolio Generator Demo](https://img.youtube.com/vi/vx1YGZMYd2Y/maxresdefault.jpg)](https://www.youtube.com/watch?v=vx1YGZMYd2Y)
 
-*Click the image above to watch a complete walkthrough of the Portfolio Generator in action!*
+_Click the image above to watch a complete walkthrough of the Portfolio Generator in action!_
 
 > **🎬 What you'll see in the demo:**
+>
 > - Complete portfolio creation process from start to finish
 > - Real-time theming and customization features
 > - GitHub integration and automated deployment
@@ -17,23 +18,27 @@ A powerful, responsive no-code portfolio generator that enables developers to cr
 ## 🌟 Features
 
 ### ⚡ Quick Setup
+
 - **Zero-code solution**: Build professional portfolios without writing a single line of code
 - **Minutes to deploy**: From idea to live website in under 5 minutes
 - **Responsive design**: Looks perfect on all devices and screen sizes
 
 ### 🎨 Dynamic Theming System
+
 - **Real-time preview**: See changes instantly as you customize
 - **Adaptive layouts**: Multiple layout options that automatically adjust
 - **Custom color schemes**: Personalize your portfolio with your brand colors
 - **Typography options**: Choose from various font combinations
 
 ### 🔐 Secure GitHub Integration
+
 - **OAuth authentication**: Secure login with your GitHub account
 - **Automated repository creation**: Creates repos automatically for your portfolio
 - **One-click deployment**: Deploy directly to GitHub Pages
 - **Version control**: All changes are tracked and versioned
 
 ### ⚡ Performance Optimized
+
 - **47% faster load times**: Achieved through advanced optimization techniques
 - **Code splitting**: Smart bundling for minimal initial payload
 - **Lazy loading**: Components load only when needed
@@ -42,6 +47,7 @@ A powerful, responsive no-code portfolio generator that enables developers to cr
 ## 🛠️ Tech Stack
 
 ### Frontend
+
 - **React.js**: Component-based UI library
 - **TypeScript**: Type-safe development
 - **Redux**: State management for complex UI interactions
@@ -49,10 +55,12 @@ A powerful, responsive no-code portfolio generator that enables developers to cr
 - **Zod**: Runtime type validation
 
 ### Backend & Infrastructure
+
 - **GitHub API**: Repository management and deployment
 - **GitHub OAuth**: Secure authentication
 
 ### Development Tools
+
 - **Vite/Webpack**: Modern build tooling
 - **ESLint**: Code quality enforcement
 - **Prettier**: Code formatting
@@ -60,19 +68,22 @@ A powerful, responsive no-code portfolio generator that enables developers to cr
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js 16+ 
+
+- Node.js 16+
 - npm or yarn
 - GitHub account
 
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/yourusername/portfolio-generator.git
    cd portfolio-generator
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    # or
@@ -80,11 +91,13 @@ A powerful, responsive no-code portfolio generator that enables developers to cr
    ```
 
 3. **Set up environment variables**
+
    ```bash
    cp .env.example .env.local
    ```
-   
+
    Add your configuration:
+
    ```env
    REACT_APP_FIREBASE_API_KEY=your_firebase_api_key
    REACT_APP_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
@@ -93,6 +106,7 @@ A powerful, responsive no-code portfolio generator that enables developers to cr
    ```
 
 4. **Start the development server**
+
    ```bash
    npm start
    # or
@@ -105,16 +119,19 @@ A powerful, responsive no-code portfolio generator that enables developers to cr
 ## 🎯 How It Works
 
 ### 1. **Authentication**
+
 - Sign in securely with your GitHub account
 - Grant necessary permissions for repository management
 
 ### 2. **Customize Your Portfolio**
+
 - Choose from multiple themes and layouts
 - Add your personal information, skills, and projects
 - Upload your profile picture and project images
 - Preview changes in real-time
 
 ### 3. **Deploy Instantly**
+
 - Click "Generate Portfolio" button
 - App creates a new repository in your GitHub account
 - Automatically deploys to GitHub Pages
@@ -152,16 +169,19 @@ portfolio-generator/
 ## 🚀 Performance Optimizations
 
 ### Code Splitting Implementation
+
 - Route-based splitting reduces initial bundle size
 - Dynamic imports for non-critical components
 - Webpack chunks optimization for efficient caching
 
 ### Lazy Loading Strategy
+
 - Images load only when in viewport
 - Components render on-demand
 - Progressive enhancement for better UX
 
 ### Bundle Optimization
+
 - Tree shaking eliminates unused code
 - Minification and compression in production
 - Modern JS features with Babel transpilation
@@ -169,12 +189,14 @@ portfolio-generator/
 ## 🔧 Configuration
 
 ### Firebase Setup
+
 1. Create a new Firebase project
 2. Enable Authentication and Firestore
 3. Add your domain to authorized domains
 4. Copy configuration to environment variables
 
 ### GitHub OAuth Setup
+
 1. Create a new GitHub OAuth App
 2. Set authorization callback URL
 3. Add client ID and secret to environment variables
@@ -184,6 +206,7 @@ portfolio-generator/
 Contributions are welcome! Please feel free to submit a Pull Request.
 
 ### Development Guidelines
+
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
 3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
@@ -191,6 +214,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 5. Open a Pull Request
 
 ### Code Standards
+
 - Follow TypeScript best practices
 - Use ESLint and Prettier for code formatting
 - Write meaningful commit messages
@@ -210,8 +234,6 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## 📞 Contact
 
 **Abhishek Tiwari** - [f20202118@goa.bits-pilani.ac.in](mailto:f20202118@goa.bits-pilani.ac.in)
-
-Project Link: [https://github.com/yourusername/portfolio-generator](https://github.com/yourusername/portfolio-generator)
 
 Live Demo: [https://portfolio-generator-demo.netlify.app](https://portfolio-generator-demo.netlify.app)
 

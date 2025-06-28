@@ -220,22 +220,11 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - Write meaningful commit messages
 - Add tests for new features
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
-
-## 🙏 Acknowledgments
-
-- React.js community for excellent documentation
-- Firebase team for robust backend services
-- GitHub API for seamless integration
-- Open source contributors who inspired this project
-
 ## 📞 Contact
 
 **Abhishek Tiwari** - [f20202118@goa.bits-pilani.ac.in](mailto:f20202118@goa.bits-pilani.ac.in)
 
-Live Demo: [https://portfolio-generator-demo.netlify.app](https://portfolio-generator-demo.netlify.app)
+Live Demo: [https://lazydev-seven.vercel.app/](https://lazydev-seven.vercel.app/)
 
 ---
 

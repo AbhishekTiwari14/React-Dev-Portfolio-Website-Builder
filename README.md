@@ -137,35 +137,6 @@ _Click the image above to watch a complete walkthrough of the Portfolio Generato
 - Automatically deploys to GitHub Pages
 - Your portfolio is live and ready to share!
 
-## 📁 Project Structure
-
-```
-portfolio-generator/
-├── public/
-│   ├── index.html
-│   └── favicon.ico
-├── src/
-│   ├── components/          # Reusable UI components
-│   │   ├── ThemeCustomizer/
-│   │   ├── PortfolioPreview/
-│   │   └── GitHubIntegration/
-│   ├── pages/              # Main application pages
-│   │   ├── Home/
-│   │   ├── Editor/
-│   │   └── Dashboard/
-│   ├── store/              # Redux store configuration
-│   │   ├── slices/
-│   │   └── index.ts
-│   ├── utils/              # Utility functions
-│   │   ├── github.ts
-│   │   ├── firebase.ts
-│   │   └── validation.ts
-│   ├── types/              # TypeScript type definitions
-│   └── App.tsx
-├── package.json
-└── README.md
-```
-
 ## 🚀 Performance Optimizations
 
 ### Code Splitting Implementation
